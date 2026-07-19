@@ -145,7 +145,6 @@ export function ResumeBuilder() {
   const header = (
     <header className="r-header">
       <h1 className="r-name">{p?.name || "Résumé"}</h1>
-      {p?.tagline && <p className="r-tagline">{p.tagline}</p>}
       {contact}
     </header>
   );
@@ -157,7 +156,6 @@ export function ResumeBuilder() {
       <div className={`resume-sheet struct-sidebar theme-${theme}`}>
         <aside className="r-aside">
           <h1 className="r-name">{p?.name || "Résumé"}</h1>
-          {p?.tagline && <p className="r-tagline">{p.tagline}</p>}
           {contact}
           {skillsSection}
         </aside>
