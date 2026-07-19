@@ -26,8 +26,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Apply any new D1 migrations to the production database (idempotent).
+      # Apply any new D1 migrations. Non-blocking: the prod DB was seeded
+      # directly, so wrangler's migration tracker may not match — a failure
+      # here must not stop the deploy. Reconcile migration state manually.
       - name: Apply D1 migrations
+        continue-on-error: true
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
