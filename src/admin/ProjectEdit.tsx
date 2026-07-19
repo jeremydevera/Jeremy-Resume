@@ -29,7 +29,6 @@ export function ProjectEdit() {
   const [slug, setSlug] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [categoryId, setCategoryId] = useState<string>("");
-  const [status, setStatus] = useState("draft");
   const [tagline, setTagline] = useState("");
   const [summary, setSummary] = useState("");
   const [body, setBody] = useState("");
@@ -55,7 +54,6 @@ export function ProjectEdit() {
           setSlug(p.slug);
           setSlugTouched(true);
           setCategoryId(p.category_id ? String(p.category_id) : "");
-          setStatus(p.status);
           setTagline(p.tagline || "");
           setSummary(p.summary || "");
           setBody(p.body_markdown || "");
@@ -112,7 +110,7 @@ export function ProjectEdit() {
       title,
       slug,
       category_id: categoryId ? Number(categoryId) : null,
-      status,
+      status: "published", // saving a project publishes it
       tagline,
       summary,
       body_markdown: body,
@@ -176,22 +174,13 @@ export function ProjectEdit() {
         </div>
       </div>
 
-      <div className="row-2">
-        <div className="field">
-          <label>Status</label>
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
-        </div>
-        <div className="field">
-          <label>Sort order (lower = first)</label>
-          <input
-            type="number"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(Number(e.target.value))}
-          />
-        </div>
+      <div className="field" style={{ maxWidth: 220 }}>
+        <label>Sort order (lower = first)</label>
+        <input
+          type="number"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(Number(e.target.value))}
+        />
       </div>
 
       <div className="field">
