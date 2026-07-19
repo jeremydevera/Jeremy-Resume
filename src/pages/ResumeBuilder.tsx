@@ -31,6 +31,7 @@ export function ResumeBuilder() {
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [contactSel, setContactSel] = useState<Set<string>>(new Set());
   const [intro, setIntro] = useState("");
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -55,6 +56,19 @@ export function ResumeBuilder() {
     [data],
   );
 
+  const groups = useMemo(() => {
+    if (!data) return [];
+    const byCat = new Map<string, { key: string; name: string; projects: typeof data.projects }>();
+    for (const pr of data.projects) {
+      const key = pr.category_slug || "uncategorized";
+      const name = pr.category_name || "Uncategorized";
+      if (!byCat.has(key)) byCat.set(key, { key, name, projects: [] });
+      byCat.get(key)!.projects.push(pr);
+    }
+    const order = [...data.categories.map((c) => c.slug), "uncategorized"];
+    return [...byCat.values()].sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
+  }, [data]);
+
   if (error) return <div className="rb-state">couldn’t load — {error}</div>;
   if (!data || !ready) return <div className="rb-state">loading…</div>;
 
@@ -72,6 +86,21 @@ export function ResumeBuilder() {
     setContactSel((prev) => {
       const next = new Set(prev);
       next.has(k) ? next.delete(k) : next.add(k);
+      return next;
+    });
+
+  const toggleExpand = (k: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(k) ? next.delete(k) : next.add(k);
+      return next;
+    });
+
+  const toggleGroup = (ids: number[]) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      const allIn = ids.every((id) => next.has(id));
+      ids.forEach((id) => (allIn ? next.delete(id) : next.add(id)));
       return next;
     });
 
@@ -241,13 +270,47 @@ export function ResumeBuilder() {
         </div>
 
         <label className="rb-label">Projects to include ({selected.size}/{data.projects.length})</label>
-        <div className="rb-projects">
-          {data.projects.map((pr) => (
-            <label className="rb-check" key={pr.id}>
-              <input type="checkbox" checked={selected.has(pr.id)} onChange={() => toggle(pr.id)} />
-              <span>{pr.title}</span>
-            </label>
-          ))}
+        <div className="rb-groups">
+          {groups.map((g) => {
+            const ids = g.projects.map((pr) => pr.id);
+            const sel = ids.filter((id) => selected.has(id)).length;
+            const open = expanded.has(g.key);
+            return (
+              <div className="rb-group" key={g.key}>
+                <div className="rb-group-head">
+                  <button
+                    type="button"
+                    className="rb-group-toggle"
+                    onClick={() => toggleExpand(g.key)}
+                    aria-expanded={open}
+                  >
+                    <span className="rb-caret">{open ? "▾" : "▸"}</span>
+                    <span className="rb-group-name">{g.name}</span>
+                    <span className="rb-group-count">{sel}/{ids.length}</span>
+                  </button>
+                  <input
+                    type="checkbox"
+                    title="Select all in category"
+                    checked={sel === ids.length}
+                    ref={(el) => {
+                      if (el) el.indeterminate = sel > 0 && sel < ids.length;
+                    }}
+                    onChange={() => toggleGroup(ids)}
+                  />
+                </div>
+                {open && (
+                  <div className="rb-group-items">
+                    {g.projects.map((pr) => (
+                      <label className="rb-check" key={pr.id}>
+                        <input type="checkbox" checked={selected.has(pr.id)} onChange={() => toggle(pr.id)} />
+                        <span>{pr.title}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
           {data.projects.length === 0 && <span className="rb-empty">No projects yet.</span>}
         </div>
       </div>

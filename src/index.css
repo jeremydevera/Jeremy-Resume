@@ -2104,3 +2104,17 @@ a.stat:hover .v {
   line-height: 1.5;
 }
 .rb-intro:focus { outline: none; border-color: var(--text); }
+
+/* Résumé builder — categorized project picker */
+.rb-groups { display: flex; flex-direction: column; gap: 4px; }
+.rb-group { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.rb-group-head { display: flex; align-items: center; gap: 8px; padding: 2px 10px 2px 2px; }
+.rb-group-toggle {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer; color: var(--text);
+  padding: 9px 6px; font-size: 13px; text-align: left; min-width: 0;
+}
+.rb-caret { color: var(--muted); font-size: 11px; width: 12px; }
+.rb-group-name { flex: 1; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rb-group-count { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+.rb-group-items { display: flex; flex-direction: column; gap: 7px; padding: 4px 12px 12px 26px; }
