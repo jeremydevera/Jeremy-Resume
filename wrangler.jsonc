@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-site",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-07-01",
+  "routes": [
+    { "pattern": "jeremydv.com", "custom_domain": true },
+    { "pattern": "www.jeremydv.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true },
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/img/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "portfolio",
+      "database_id": "c1955a57-4bfa-42d2-b2d2-ecd8c176339e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "portfolio"
+    }
+  ]
+}
