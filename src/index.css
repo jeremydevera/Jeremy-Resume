@@ -1913,3 +1913,163 @@ a.stat:hover .v {
   .pzig-row, .pzig-row:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
   .pcover-thumb { width: 84px; height: 56px; }
 }
+
+/* ============ Résumé builder ============ */
+.btn-resume {
+  display: inline-block;
+  margin-top: 22px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.btn-resume:hover { opacity: 0.9; }
+
+.rb { display: flex; min-height: 100vh; background: var(--bg); }
+.rb-state { padding: 80px; text-align: center; color: var(--muted); }
+.rb-controls {
+  width: 300px; flex: 0 0 300px;
+  border-right: 1px solid var(--line);
+  padding: 24px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.rb-controls-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.rb-back { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.rb-back:hover { color: var(--text); }
+.rb-download {
+  background: var(--accent); color: var(--accent-contrast);
+  border: none; border-radius: 8px; padding: 9px 16px; font-weight: 600; cursor: pointer; font-size: 13px;
+}
+.rb-download:hover { opacity: 0.9; }
+.rb-hint { font-size: 12px; color: var(--muted); margin: 0 0 8px; line-height: 1.5; }
+.rb-label {
+  display: block; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--muted); margin: 18px 0 6px;
+}
+.rb-controls select {
+  width: 100%; padding: 8px 32px 8px 10px; font-size: 13px; color: var(--text);
+  background: var(--bg); border: 1px solid var(--line-strong); border-radius: 8px;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+}
+.rb-projects { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+.rb-check { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; color: var(--text); }
+.rb-check input { width: 15px; height: 15px; }
+.rb-empty { color: var(--muted); font-size: 13px; }
+.rb-preview {
+  flex: 1; min-width: 0; padding: 40px; overflow: auto;
+  display: flex; justify-content: center; align-items: flex-start;
+  background: rgba(128, 128, 128, 0.16);
+}
+
+/* Sheet base — always light (for print), theme tokens drive accents */
+.resume-sheet {
+  --r-ink: #1a1a1a; --r-muted: #565656; --r-line: #e2e2e2; --r-accent: #111111;
+  --r-head-font: var(--font-sans); --r-body-font: var(--font-sans);
+  width: 794px; max-width: 100%; min-height: 1123px;
+  background: #fff; color: var(--r-ink);
+  font-family: var(--r-body-font); font-size: 13px; line-height: 1.5;
+  padding: 48px 54px; box-shadow: 0 6px 34px rgba(0, 0, 0, 0.18);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.r-name { font-family: var(--r-head-font); font-size: 28px; margin: 0; letter-spacing: -0.01em; color: var(--r-ink); }
+.r-tagline { color: var(--r-accent); font-weight: 600; font-size: 14px; margin: 4px 0 10px; }
+.r-contact { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--r-muted); }
+.r-contact a { color: var(--r-accent); text-decoration: none; }
+.r-header { border-bottom: 1px solid var(--r-line); padding-bottom: 16px; }
+.r-summary { color: var(--r-muted); margin: 16px 0; }
+.r-h2 {
+  font-family: var(--r-head-font); font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--r-accent); border-bottom: 2px solid var(--r-accent); padding-bottom: 4px; margin: 22px 0 12px;
+}
+.r-exp { margin-bottom: 14px; }
+.r-exp-top { display: flex; justify-content: space-between; gap: 12px; }
+.r-exp-role { font-weight: 700; }
+.r-exp-period { color: var(--r-muted); font-size: 12px; white-space: nowrap; }
+.r-exp-org { color: var(--r-muted); font-size: 12px; margin-bottom: 4px; }
+.r-exp-desc { font-size: 12.5px; }
+.r-exp-desc ul, .r-exp-desc ol { margin: 4px 0; padding-left: 18px; }
+.r-exp-desc ul { list-style: disc; }
+.r-exp-desc ol { list-style: decimal; }
+.r-proj { margin-bottom: 10px; }
+.r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.r-proj-title { font-weight: 600; }
+.r-proj-cat { color: var(--r-muted); font-size: 11px; white-space: nowrap; }
+.r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; }
+.r-proj-link { font-size: 11px; color: var(--r-accent); }
+.r-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.r-skill { border: 1px solid var(--r-line); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--r-ink); }
+
+/* Themes */
+.resume-sheet.theme-mono { --r-accent: #111111; }
+.resume-sheet.theme-slate { --r-accent: #475569; }
+.resume-sheet.theme-navy { --r-accent: #1e3a5f; }
+.resume-sheet.theme-emerald { --r-accent: #047857; }
+.resume-sheet.theme-crimson { --r-accent: #b3122a; }
+.resume-sheet.theme-amber { --r-accent: #b45309; }
+.resume-sheet.theme-serif { --r-accent: #33302b; --r-head-font: var(--font-serif); }
+.resume-sheet.theme-tech {
+  --r-accent: #111111; --r-head-font: var(--font-mono); --r-body-font: var(--font-mono); font-size: 12px;
+}
+
+/* Structure: modern — accent header band */
+.struct-modern .r-header {
+  background: var(--r-accent); color: #fff; border: none;
+  margin: -48px -54px 18px; padding: 40px 54px;
+}
+.struct-modern .r-name, .struct-modern .r-tagline { color: #fff; }
+.struct-modern .r-contact { color: rgba(255, 255, 255, 0.9); }
+.struct-modern .r-contact a { color: #fff; }
+
+/* Structure: timeline — rail on experience */
+.struct-timeline .r-exp-list { position: relative; padding-left: 20px; }
+.struct-timeline .r-exp-list::before {
+  content: ""; position: absolute; left: 4px; top: 4px; bottom: 4px; width: 1px; background: var(--r-line);
+}
+.struct-timeline .r-exp { position: relative; }
+.struct-timeline .r-exp::before {
+  content: ""; position: absolute; left: -20px; top: 5px; width: 9px; height: 9px;
+  border-radius: 50%; background: var(--r-accent);
+}
+
+/* Structure: compact — denser */
+.struct-compact { padding: 38px 42px; font-size: 12px; }
+.struct-compact .r-h2 { margin: 16px 0 8px; }
+.struct-compact .r-exp { margin-bottom: 10px; }
+
+/* Structure: digest — first project featured */
+.struct-digest .r-proj:first-child { border-left: 3px solid var(--r-accent); padding-left: 12px; }
+.struct-digest .r-proj:first-child .r-proj-title { font-size: 16px; }
+
+/* Structure: sidebar — two column */
+.resume-sheet.struct-sidebar { display: grid; grid-template-columns: 232px 1fr; padding: 0; overflow: hidden; }
+.struct-sidebar .r-aside { background: var(--r-accent); color: #fff; padding: 40px 26px; }
+.struct-sidebar .r-aside .r-name { color: #fff; }
+.struct-sidebar .r-aside .r-tagline { color: rgba(255, 255, 255, 0.92); }
+.struct-sidebar .r-aside .r-contact { flex-direction: column; gap: 6px; color: rgba(255, 255, 255, 0.9); }
+.struct-sidebar .r-aside .r-contact a { color: #fff; }
+.struct-sidebar .r-aside .r-h2 { color: #fff; border-color: rgba(255, 255, 255, 0.45); }
+.struct-sidebar .r-aside .r-skill { border-color: rgba(255, 255, 255, 0.45); color: #fff; }
+.struct-sidebar .r-primary { padding: 40px 42px; }
+
+@media (max-width: 720px) {
+  .rb { flex-direction: column; }
+  .rb-controls { width: 100%; flex: none; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--line); }
+}
+
+/* ============ Print ============ */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff; }
+  .sidebar, .admin-bar, .rb-controls { display: none !important; }
+  .rb, .rb-preview { display: block; padding: 0; margin: 0; background: #fff; overflow: visible; }
+  .resume-sheet {
+    box-shadow: none; width: 100%; min-height: 0; margin: 0; padding: 0;
+  }
+  .struct-modern .r-header { margin: 0 0 18px; padding: 28px 30px; }
+  .resume-sheet.struct-sidebar { padding: 0; }
+}
