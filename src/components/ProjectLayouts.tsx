@@ -8,9 +8,11 @@ import { initials } from "./util";
 export function ProjectsDisplay({
   projects,
   layout,
+  hideCover = false,
 }: {
   projects: ProjectListItem[];
   layout: string;
+  hideCover?: boolean;
 }) {
   switch (layout) {
     case "grid-2":
@@ -176,7 +178,7 @@ export function ProjectsDisplay({
     case "spotlight":
       return <Spotlight projects={projects} />;
     case "digest":
-      return <Digest projects={projects} />;
+      return <Digest projects={projects} hideCover={hideCover} />;
     case "featured":
       return <Featured projects={projects} />;
     case "compact":
@@ -206,7 +208,7 @@ export function ProjectsDisplay({
       return (
         <div className="rows">
           {projects.map((p) => (
-            <ProjectRow key={p.id} project={p} />
+            <ProjectRow key={p.id} project={p} hideCover={hideCover} />
           ))}
         </div>
       );
@@ -231,7 +233,7 @@ function LeadCard({ p }: { p: ProjectListItem }) {
   );
 }
 
-function Digest({ projects }: { projects: ProjectListItem[] }) {
+function Digest({ projects, hideCover = false }: { projects: ProjectListItem[]; hideCover?: boolean }) {
   const [lead, ...rest] = projects;
   if (!lead) return null;
   return (
@@ -240,7 +242,7 @@ function Digest({ projects }: { projects: ProjectListItem[] }) {
       {rest.length > 0 && (
         <div className="rows">
           {rest.map((p) => (
-            <ProjectRow key={p.id} project={p} />
+            <ProjectRow key={p.id} project={p} hideCover={hideCover} />
           ))}
         </div>
       )}

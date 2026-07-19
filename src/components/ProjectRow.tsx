@@ -2,10 +2,16 @@ import { Link } from "react-router-dom";
 import type { ProjectListItem } from "../types";
 import { initials } from "./util";
 
-export function ProjectRow({ project }: { project: ProjectListItem }) {
+export function ProjectRow({
+  project,
+  hideCover = false,
+}: {
+  project: ProjectListItem;
+  hideCover?: boolean;
+}) {
   return (
     <Link to={`/projects/${project.slug}`} className="prow">
-      {project.cover_url ? (
+      {!hideCover && project.cover_url ? (
         <img className="pthumb" src={project.cover_url} alt={project.title} loading="lazy" />
       ) : (
         <div className="pthumb-ph">{initials(project.title)}</div>
