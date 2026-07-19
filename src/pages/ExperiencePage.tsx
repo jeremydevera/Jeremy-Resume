@@ -77,6 +77,45 @@ export function ExperiencePage() {
             </div>
           ))}
         </div>
+      ) : layout === "grid" ? (
+        <div className="exp-grid">
+          {resume.map((e) => (
+            <div className="exp-card" key={e.id}>
+              <div className="exp-monogram">{initials(e.org || e.role)}</div>
+              <div className="exp-role-date">{e.period}</div>
+              <div className="exp-card-role">{e.role}</div>
+              <div className="exp-metaline">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
+              {e.description && (
+                <div className="exp-desc" dangerouslySetInnerHTML={{ __html: e.description }} />
+              )}
+              {e.skills?.length > 0 && (
+                <div className="exp-skills">
+                  {e.skills.map((s) => (
+                    <span className="skill-tag" key={s}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : layout === "numbered" ? (
+        <ol className="exp-numbered">
+          {resume.map((e, i) => (
+            <li className="exp-num-row" key={e.id}>
+              <span className="exp-num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="exp-num-body">
+                <div className="exp-card-role">{e.role}</div>
+                <div className="exp-metaline">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
+                <div className="exp-role-date">{e.period}</div>
+                {e.description && (
+                  <div className="exp-desc" dangerouslySetInnerHTML={{ __html: e.description }} />
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
       ) : (
         <div className="timeline">
           {resume.map((e) => (

@@ -105,8 +105,10 @@ export function ProfilePanel() {
         <label>Home layout — how projects show on the homepage</label>
         <select value={homeLayout} onChange={(e) => setHomeLayout(e.target.value)}>
           <option value="list">List (rows)</option>
+          <option value="grid-2">2 columns</option>
           <option value="grid-3">3 columns</option>
           <option value="grid-4">4 columns</option>
+          <option value="gallery">Gallery (cover mosaic)</option>
           <option value="digest">Digest (featured + list)</option>
           <option value="featured">Featured (big card + grid)</option>
           <option value="compact">Compact (dense text rows)</option>
@@ -120,8 +122,10 @@ export function ProfilePanel() {
           <select value={projectsLayout} onChange={(e) => setProjectsLayout(e.target.value)}>
             <option value="cards">Big cards</option>
             <option value="list">List (rows)</option>
+            <option value="grid-2">2 columns</option>
             <option value="grid-3">3 columns</option>
             <option value="grid-4">4 columns</option>
+            <option value="gallery">Gallery (cover mosaic)</option>
             <option value="digest">Digest (featured + list)</option>
             <option value="featured">Featured (big card + grid)</option>
             <option value="compact">Compact (dense text rows)</option>
@@ -134,6 +138,8 @@ export function ProfilePanel() {
             <option value="timeline">Timeline (monograms)</option>
             <option value="list">Simple list</option>
             <option value="cards">Cards (2-column)</option>
+            <option value="grid">Grid (auto cards)</option>
+            <option value="numbered">Numbered list</option>
             <option value="compact">Compact (one-liners)</option>
           </select>
         </div>

@@ -13,12 +13,31 @@ export function ProjectsDisplay({
   layout: string;
 }) {
   switch (layout) {
+    case "grid-2":
     case "grid-3":
     case "grid-4":
       return (
         <div className={`ptiles ${layout}`}>
           {projects.map((p) => (
             <ProjectTile key={p.id} project={p} />
+          ))}
+        </div>
+      );
+    case "gallery":
+      return (
+        <div className="pgallery">
+          {projects.map((p) => (
+            <Link key={p.id} to={`/projects/${p.slug}`} className="pgallery-item">
+              {p.cover_url ? (
+                <img src={p.cover_url} alt={p.title} loading="lazy" />
+              ) : (
+                <div className="pgallery-ph">{initials(p.title)}</div>
+              )}
+              <div className="pgallery-cap">
+                <span className="pgallery-title">{p.title}</span>
+                {p.category_name && <span className="pgallery-cat">{p.category_name}</span>}
+              </div>
+            </Link>
           ))}
         </div>
       );
