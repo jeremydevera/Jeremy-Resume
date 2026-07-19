@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 export function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const stored = localStorage.getItem("theme");
+    const stored = localStorage.getItem("theme-v2");
     // Default to light — never auto-follow the OS into dark.
     return stored === "dark" ? "dark" : "light";
   });
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("theme-v2", theme);
   }, [theme]);
   const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   return { theme, toggle };
