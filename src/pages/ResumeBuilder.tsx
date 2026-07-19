@@ -29,6 +29,8 @@ export function ResumeBuilder() {
   const [structure, setStructure] = useState("classic");
   const [theme, setTheme] = useState("mono");
   const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [contactSel, setContactSel] = useState<Set<string>>(new Set());
+  const [intro, setIntro] = useState("");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -37,6 +39,12 @@ export function ResumeBuilder() {
       .then((d) => {
         setData(d);
         setSelected(new Set(d.projects.map((p) => p.id))); // all selected by default
+        const ck = new Set<string>();
+        if (d.profile?.email) ck.add("email");
+        if (d.profile?.location) ck.add("location");
+        (d.profile?.socials || []).forEach((s) => ck.add(s.url));
+        setContactSel(ck); // all contacts shown by default
+        setIntro(d.profile?.bio || ""); // editable opening intro (defaults to bio, not tagline)
         setReady(true);
       })
       .catch((e) => setError(e.message));
@@ -60,15 +68,24 @@ export function ResumeBuilder() {
       return next;
     });
 
+  const toggleContact = (k: string) =>
+    setContactSel((prev) => {
+      const next = new Set(prev);
+      next.has(k) ? next.delete(k) : next.add(k);
+      return next;
+    });
+
   const contact = (
     <div className="r-contact">
-      {p?.email && <span>{p.email}</span>}
-      {p?.location && <span>{p.location}</span>}
-      {(p?.socials || []).map((s) => (
-        <a key={s.url} href={s.url}>
-          {s.label}
-        </a>
-      ))}
+      {p?.email && contactSel.has("email") && <span>{p.email}</span>}
+      {p?.location && contactSel.has("location") && <span>{p.location}</span>}
+      {(p?.socials || [])
+        .filter((s) => contactSel.has(s.url))
+        .map((s) => (
+          <a key={s.url} href={s.url}>
+            {s.label}
+          </a>
+        ))}
     </div>
   );
 
@@ -133,7 +150,7 @@ export function ResumeBuilder() {
     </header>
   );
 
-  const summary = p?.bio && <p className="r-summary">{p.bio}</p>;
+  const summary = intro.trim() && <p className="r-summary">{intro}</p>;
 
   const sheet =
     structure === "sidebar" ? (
@@ -190,6 +207,40 @@ export function ResumeBuilder() {
             </option>
           ))}
         </select>
+
+        <label className="rb-label">Opening introduction</label>
+        <textarea
+          className="rb-intro"
+          value={intro}
+          onChange={(e) => setIntro(e.target.value)}
+          rows={4}
+          placeholder="Short intro paragraph for the top of your résumé…"
+        />
+
+        <label className="rb-label">Contact to show</label>
+        <div className="rb-projects">
+          {p?.email && (
+            <label className="rb-check">
+              <input type="checkbox" checked={contactSel.has("email")} onChange={() => toggleContact("email")} />
+              <span>Email</span>
+            </label>
+          )}
+          {p?.location && (
+            <label className="rb-check">
+              <input type="checkbox" checked={contactSel.has("location")} onChange={() => toggleContact("location")} />
+              <span>Location</span>
+            </label>
+          )}
+          {(p?.socials || []).map((s) => (
+            <label className="rb-check" key={s.url}>
+              <input type="checkbox" checked={contactSel.has(s.url)} onChange={() => toggleContact(s.url)} />
+              <span>{s.label}</span>
+            </label>
+          ))}
+          {!p?.email && !p?.location && (p?.socials || []).length === 0 && (
+            <span className="rb-empty">No contacts on your profile yet.</span>
+          )}
+        </div>
 
         <label className="rb-label">Projects to include ({selected.size}/{data.projects.length})</label>
         <div className="rb-projects">
