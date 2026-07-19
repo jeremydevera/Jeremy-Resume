@@ -1527,9 +1527,26 @@ a.stat:hover .v {
   .sidebar .nav-group {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 4px 16px;
+    gap: 6px 10px;
     border-top: none;
     padding: 0;
+  }
+  /* mobile: clear active-tab highlight (accent pill) */
+  .sidebar a.nav-link {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .sidebar a.nav-link.active {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+  .sidebar a.nav-link.active svg {
+    display: inline;
+    opacity: 1;
+  }
+  .sidebar a.nav-link.active::before {
+    content: none;
   }
   .sidebar .sidebar-foot {
     margin-top: 0;
