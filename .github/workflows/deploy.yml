@@ -12,12 +12,15 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22 # wrangler 4.x requires Node >= 22
           cache: npm
 
       - name: Install dependencies
@@ -26,20 +29,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Apply any new D1 migrations. Non-blocking: the prod DB was seeded
-      # directly, so wrangler's migration tracker may not match — a failure
-      # here must not stop the deploy. Reconcile migration state manually.
+      # Apply new D1 migrations. Non-blocking: prod DB was seeded directly, so
+      # wrangler's tracker may not match — a failure here must not stop deploy.
+      # Uses the project's pinned wrangler (no action-installed version clash).
       - name: Apply D1 migrations
         continue-on-error: true
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 migrations apply portfolio --remote
+        run: npx wrangler d1 migrations apply portfolio --remote
 
       - name: Deploy Worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+        run: npx wrangler deploy
