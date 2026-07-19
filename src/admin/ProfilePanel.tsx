@@ -154,6 +154,11 @@ export function ProfilePanel() {
           <button className="btn" type="button" onClick={() => avatarInput.current?.click()}>
             Upload
           </button>
+          {avatarKey && (
+            <button className="btn danger" type="button" onClick={() => setAvatarKey(null)}>
+              Remove
+            </button>
+          )}
           <input
             ref={avatarInput}
             type="file"

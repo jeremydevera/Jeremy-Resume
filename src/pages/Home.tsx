@@ -39,7 +39,9 @@ export function Home() {
       {/* Hero */}
       <section className="hero">
         {p?.avatar_url ? (
-          <img className="avatar" src={p.avatar_url} alt={p.name} />
+          <div className="avatar-wrap">
+            <img className="avatar" src={p.avatar_url} alt={p.name} />
+          </div>
         ) : (
           <div className="avatar-ph">{initials(p?.name || "P")}</div>
         )}

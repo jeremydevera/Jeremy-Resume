@@ -236,12 +236,27 @@ img {
   align-items: start;
   padding-top: 8px;
 }
-.avatar {
+.avatar-wrap {
+  position: relative;
   width: 200px;
   height: 240px;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.15);
   border: 1px solid var(--line);
+  overflow: hidden;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.35) brightness(1.05);
+}
+/* halftone screen: page-colored dot grid with round holes -> the photo reads as dots */
+.avatar-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, transparent 0 1.05px, var(--bg) 1.35px);
+  background-size: 3.5px 3.5px;
 }
 .avatar-ph {
   width: 200px;
