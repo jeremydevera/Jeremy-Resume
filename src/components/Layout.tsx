@@ -18,6 +18,11 @@ const IconMail = () => (
     <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 5L2 7" />
   </svg>
 );
+const IconDownload = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" />
+  </svg>
+);
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="shell">
@@ -35,6 +40,9 @@ export function Layout({ children }: { children: ReactNode }) {
             </NavLink>
           </div>
           <div className="nav-group">
+            <NavLink className="nav-link" to="/resume">
+              <IconDownload /> résumé
+            </NavLink>
             <NavLink className="nav-link" to="/hire-me">
               <IconMail /> hire me
             </NavLink>
