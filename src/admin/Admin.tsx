@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, NavLink, Outlet, useNavigate } from "react-rou
 import { api } from "../api";
 import { ThemeSwitch } from "../components/ThemeSwitch";
 import { ToastProvider } from "./toast";
+import { ConfirmProvider } from "./confirm";
 import { Login } from "./Login";
 import { ProjectsList } from "./ProjectsList";
 import { ProjectEdit } from "./ProjectEdit";
@@ -39,6 +40,7 @@ export function Admin() {
 
   return (
     <ToastProvider>
+    <ConfirmProvider>
     <div className="admin">
       <Routes>
         <Route
@@ -70,6 +72,7 @@ export function Admin() {
         </Route>
       </Routes>
     </div>
+    </ConfirmProvider>
     </ToastProvider>
   );
 }

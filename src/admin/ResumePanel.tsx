@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import type { ResumeEntry } from "../types";
 import { useToast } from "./toast";
+import { useConfirm } from "./confirm";
 import { RichTextEditor } from "./RichTextEditor";
 
 export function ResumePanel() {
@@ -17,6 +18,7 @@ export function ResumePanel() {
   const [sortOrder, setSortOrder] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
+  const confirm = useConfirm();
 
   const load = () => api.get<ResumeEntry[]>("/api/admin/resume").then(setEntries).catch((e) => setError(e.message));
   useEffect(() => {
@@ -73,7 +75,7 @@ export function ResumePanel() {
   };
 
   const remove = async (r: ResumeEntry) => {
-    if (!confirm(`Delete experience entry “${r.role}”?`)) return;
+    if (!(await confirm({ title: "Delete experience entry", message: `Delete experience entry “${r.role}”?`, confirmLabel: "Delete", danger: true }))) return;
     try {
       await api.del(`/api/admin/resume/${r.id}`);
       toast("success", `Experience entry “${r.role}” deleted from database`);

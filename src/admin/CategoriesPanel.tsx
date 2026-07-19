@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import type { Category } from "../types";
 import { useToast } from "./toast";
+import { useConfirm } from "./confirm";
 
 function slugify(s: string): string {
   return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -15,6 +16,7 @@ export function CategoriesPanel() {
   const [sortOrder, setSortOrder] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
+  const confirm = useConfirm();
 
   const load = () => api.get<Category[]>("/api/categories").then(setCategories).catch((e) => setError(e.message));
   useEffect(() => {
@@ -52,7 +54,7 @@ export function CategoriesPanel() {
   };
 
   const remove = async (c: Category) => {
-    if (!confirm(`Delete category “${c.name}”? Projects keep existing but lose this category.`)) return;
+    if (!(await confirm({ title: "Delete category", message: `Delete category “${c.name}”? Projects keep existing but lose this category.`, confirmLabel: "Delete", danger: true }))) return;
     try {
       await api.del(`/api/admin/categories/${c.id}`);
       toast("success", `Category “${c.name}” deleted from database`);

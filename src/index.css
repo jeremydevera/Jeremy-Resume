@@ -2118,3 +2118,27 @@ a.stat:hover .v {
 .rb-group-name { flex: 1; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rb-group-count { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
 .rb-group-items { display: flex; flex-direction: column; gap: 7px; padding: 4px 12px 12px 26px; }
+
+/* ============ Confirm dialog ============ */
+.cd-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: cd-fade 0.12s ease;
+}
+.cd-modal {
+  width: 100%; max-width: 420px;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line-strong); border-radius: 14px;
+  padding: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: cd-pop 0.14s ease;
+}
+.cd-title { font-size: 17px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
+.cd-msg { font-size: 14px; color: var(--muted); margin: 0 0 20px; line-height: 1.55; }
+.cd-actions { display: flex; justify-content: flex-end; gap: 10px; }
+@keyframes cd-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cd-pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .cd-overlay, .cd-modal { animation: none; }
+}

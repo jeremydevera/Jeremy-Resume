@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { api } from "../api";
 import type { ProjectListItem } from "../types";
 import { useToast } from "./toast";
+import { useConfirm } from "./confirm";
 
 export function ProjectsList() {
   const [projects, setProjects] = useState<ProjectListItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
+  const confirm = useConfirm();
 
   const load = () =>
     api
@@ -20,7 +22,7 @@ export function ProjectsList() {
   }, []);
 
   const remove = async (id: number, title: string) => {
-    if (!confirm(`Delete “${title}”? This cannot be undone.`)) return;
+    if (!(await confirm({ title: "Delete project", message: `Delete “${title}”? This cannot be undone.`, confirmLabel: "Delete", danger: true }))) return;
     try {
       await api.del(`/api/admin/projects/${id}`);
       toast("success", `Deleted “${title}” from database`);
