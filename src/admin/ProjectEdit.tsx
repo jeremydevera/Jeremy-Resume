@@ -37,6 +37,7 @@ export function ProjectEdit() {
   const [linkUrl, setLinkUrl] = useState("");
   const [coverKey, setCoverKey] = useState<string | null>(null);
   const [featured, setFeatured] = useState(false);
+  const [skillsInput, setSkillsInput] = useState("");
   const [images, setImages] = useState<GalleryImage[]>([]);
 
   const [error, setError] = useState<string | null>(null);
@@ -65,6 +66,7 @@ export function ProjectEdit() {
           setLinkUrl(p.link_url || "");
           setCoverKey(p.cover_image_key || null);
           setFeatured(!!p.featured);
+          setSkillsInput((p.skills || []).join(", "));
           setImages(
             (p.images || []).map((im: any) => ({
               r2_key: im.r2_key,
@@ -128,6 +130,7 @@ export function ProjectEdit() {
       summary,
       body_markdown: body,
       featured,
+      skills: skillsInput.split(",").map((s) => s.trim()).filter(Boolean),
       sort_order: sortOrder,
       link_url: linkUrl.trim(),
       cover_image_key: coverKey,
@@ -205,6 +208,15 @@ export function ProjectEdit() {
       <div className="field">
         <label>Summary</label>
         <RichTextEditor value={summary} onChange={setSummary} placeholder="Short summary (shown on cards &amp; résumé)…" />
+      </div>
+
+      <div className="field">
+        <label>Skills / tech (comma-separated — shown as tags on the résumé)</label>
+        <input
+          value={skillsInput}
+          onChange={(e) => setSkillsInput(e.target.value)}
+          placeholder="Next.js, React, TypeScript, Cloudflare Workers"
+        />
       </div>
 
       <div className="field">

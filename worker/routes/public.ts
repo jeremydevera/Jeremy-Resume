@@ -26,7 +26,7 @@ async function getCategories(env: Env) {
 
 async function listPublishedProjects(env: Env, categorySlug: string | null) {
   let sql = `SELECT p.id, p.slug, p.title, p.tagline, p.summary, p.cover_image_key,
-                    p.link_url, p.sort_order, p.created_at, p.featured,
+                    p.link_url, p.sort_order, p.created_at, p.featured, p.skills,
                     c.slug AS category_slug, c.name AS category_name
              FROM projects p
              LEFT JOIN categories c ON p.category_id = c.id
@@ -42,6 +42,7 @@ async function listPublishedProjects(env: Env, categorySlug: string | null) {
     ...row,
     cover_url: imgUrl(row.cover_image_key as string | null),
     featured: !!row.featured,
+    skills: JSON.parse((row.skills as string) || "[]"),
   }));
 }
 

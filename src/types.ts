@@ -56,6 +56,7 @@ export interface ProjectListItem {
   status?: string;
   sort_order?: number;
   featured?: boolean;
+  skills?: string[];
 }
 
 export interface ProjectDetail extends ProjectListItem {

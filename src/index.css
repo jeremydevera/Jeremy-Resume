@@ -2450,3 +2450,12 @@ a.stat:hover .v {
 .emailpop-addr { font-family: var(--font-mono); font-size: 13px; color: var(--text); word-break: break-all; }
 .emailpop-actions { display: flex; gap: 8px; }
 .emailpop-actions .btn { flex: 1; text-align: center; }
+
+/* project skill tags on the résumé */
+.r-proj-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; padding-left: 14px; }
+.r-proj-skill {
+  font-size: 10.5px; line-height: 1;
+  padding: 4px 8px; border-radius: 4px;
+  border: 1px solid var(--r-line); color: var(--r-muted); background: transparent;
+}
+.struct-sidebar .r-proj-skill { border-color: #cfd6dc; color: #55606b; }

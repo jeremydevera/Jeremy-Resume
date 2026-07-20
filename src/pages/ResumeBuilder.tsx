@@ -166,6 +166,15 @@ export function ResumeBuilder() {
               <p className="r-proj-desc">{pr.tagline}</p>
             ) : null}
             {pr.link_url && <span className="r-proj-link">{pr.link_url}</span>}
+            {pr.skills && pr.skills.length > 0 && (
+              <div className="r-proj-skills">
+                {pr.skills.map((s) => (
+                  <span className="r-proj-skill" key={s}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
