@@ -32,6 +32,7 @@ export function ResumeBuilder() {
   const [contactSel, setContactSel] = useState<Set<string>>(new Set());
   const [intro, setIntro] = useState("");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [skillSel, setSkillSel] = useState<Set<string>>(new Set());
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export function ResumeBuilder() {
         (d.profile?.socials || []).forEach((s) => ck.add(s.url));
         setContactSel(ck); // all contacts shown by default
         setIntro(d.profile?.bio || ""); // editable opening intro (defaults to bio, not tagline)
+        setSkillSel(new Set(d.resume.flatMap((e) => e.skills || []))); // all skills shown by default
         setReady(true);
       })
       .catch((e) => setError(e.message));
@@ -74,6 +76,14 @@ export function ResumeBuilder() {
 
   const p = data.profile;
   const chosenProjects = data.projects.filter((pr) => selected.has(pr.id));
+  const selectedSkills = skills.filter((s) => skillSel.has(s));
+
+  const toggleSkill = (s: string) =>
+    setSkillSel((prev) => {
+      const next = new Set(prev);
+      next.has(s) ? next.delete(s) : next.add(s);
+      return next;
+    });
 
   const toggle = (id: number) =>
     setSelected((prev) => {
@@ -162,11 +172,11 @@ export function ResumeBuilder() {
     </section>
   );
 
-  const skillsSection = skills.length > 0 && (
+  const skillsSection = selectedSkills.length > 0 && (
     <section className="r-section">
       <h2 className="r-h2">Skills</h2>
       <div className="r-skills">
-        {skills.map((s) => (
+        {selectedSkills.map((s) => (
           <span className="r-skill" key={s}>
             {s}
           </span>
@@ -188,11 +198,47 @@ export function ResumeBuilder() {
     structure === "sidebar" ? (
       <div className={`resume-sheet struct-sidebar theme-${theme}`}>
         <aside className="r-aside">
-          <h1 className="r-name">{p?.name || "Résumé"}</h1>
-          {contact}
-          {skillsSection}
+          <section className="r-aside-sec">
+            <h2 className="r-aside-h">Contact</h2>
+            {p?.email && contactSel.has("email") && (
+              <div className="r-aside-item">
+                <span className="r-aside-label">Email</span>
+                {p.email}
+              </div>
+            )}
+            {p?.location && contactSel.has("location") && (
+              <div className="r-aside-item">
+                <span className="r-aside-label">Location</span>
+                {p.location}
+              </div>
+            )}
+            {(p?.socials || [])
+              .filter((s) => contactSel.has(s.url))
+              .map((s) => (
+                <div className="r-aside-item" key={s.url}>
+                  <span className="r-aside-label">{s.label}</span>
+                  <a href={s.url}>{s.url.replace(/^https?:\/\//, "")}</a>
+                </div>
+              ))}
+          </section>
+          {selectedSkills.length > 0 && (
+            <section className="r-aside-sec">
+              <h2 className="r-aside-h">Skills</h2>
+              <div className="r-aside-skills">
+                {selectedSkills.map((s) => (
+                  <span className="r-aside-skill" key={s}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
         </aside>
         <div className="r-primary">
+          <header className="r-main-head">
+            <h1 className="r-name">{p?.name || "Résumé"}</h1>
+            {p?.tagline && <p className="r-subtitle">{p.tagline}</p>}
+          </header>
           {summary}
           {experienceSection}
           {projectsSection}
@@ -272,6 +318,20 @@ export function ResumeBuilder() {
             <span className="rb-empty">No contacts on your profile yet.</span>
           )}
         </div>
+
+        {skills.length > 0 && (
+          <>
+            <label className="rb-label">Skills to show ({selectedSkills.length}/{skills.length})</label>
+            <div className="rb-projects">
+              {skills.map((s) => (
+                <label className="rb-check" key={s}>
+                  <input type="checkbox" checked={skillSel.has(s)} onChange={() => toggleSkill(s)} />
+                  <span>{s}</span>
+                </label>
+              ))}
+            </div>
+          </>
+        )}
 
         <label className="rb-label">Projects to include ({selected.size}/{data.projects.length})</label>
         <div className="rb-groups">

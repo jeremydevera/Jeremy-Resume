@@ -2199,16 +2199,86 @@ a.stat:hover .v {
 .struct-digest .r-proj:first-child { border-left: 3px solid var(--r-accent); padding-left: 12px; }
 .struct-digest .r-proj:first-child .r-proj-title { font-size: 16px; }
 
-/* Structure: sidebar — two column */
-.resume-sheet.struct-sidebar { display: grid; grid-template-columns: 232px 1fr; padding: 0; overflow: hidden; }
-.struct-sidebar .r-aside { background: var(--r-accent); color: #fff; padding: 40px 26px; }
-.struct-sidebar .r-aside .r-name { color: #fff; }
-.struct-sidebar .r-aside .r-tagline { color: rgba(255, 255, 255, 0.92); }
-.struct-sidebar .r-aside .r-contact { flex-direction: column; gap: 6px; color: rgba(255, 255, 255, 0.9); }
-.struct-sidebar .r-aside .r-contact a { color: #fff; }
-.struct-sidebar .r-aside .r-h2 { color: #fff; border-color: rgba(255, 255, 255, 0.45); }
-.struct-sidebar .r-aside .r-skill { border-color: rgba(255, 255, 255, 0.45); color: #fff; }
-.struct-sidebar .r-primary { padding: 40px 42px; }
+/* Structure: sidebar — two column (professional two-tone) */
+.resume-sheet.struct-sidebar {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  padding: 0;
+  overflow: hidden;
+  --r-side-bg: #2f3d4d;
+  --r-side-text: #dfe6ec;
+  --r-side-accent: #6bb3ac;
+  --r-main-ink: #26313d;
+  --r-main-accent: #3f8a86;
+}
+.struct-sidebar .r-aside {
+  background: var(--r-side-bg);
+  color: var(--r-side-text);
+  padding: 36px 24px;
+}
+.struct-sidebar .r-aside-sec { margin-bottom: 28px; }
+.struct-sidebar .r-aside-sec:last-child { margin-bottom: 0; }
+.struct-sidebar .r-aside-h {
+  font-family: var(--r-head-font);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 14px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+.struct-sidebar .r-aside-item { font-size: 12px; line-height: 1.5; margin-bottom: 13px; }
+.struct-sidebar .r-aside-item:last-child { margin-bottom: 0; }
+.struct-sidebar .r-aside-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--r-side-accent);
+  margin-bottom: 3px;
+}
+.struct-sidebar .r-aside-item a { color: var(--r-side-text); text-decoration: none; word-break: break-word; }
+.struct-sidebar .r-aside-skills { display: flex; flex-direction: column; gap: 9px; }
+.struct-sidebar .r-aside-skill { font-size: 12px; line-height: 1.4; color: var(--r-side-text); }
+
+.struct-sidebar .r-primary { padding: 36px 36px; }
+.struct-sidebar .r-main-head {
+  border-bottom: 2px solid var(--r-main-accent);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+.struct-sidebar .r-name { color: var(--r-main-ink); font-size: 30px; margin: 0; }
+.struct-sidebar .r-subtitle {
+  color: var(--r-main-accent);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 7px 0 0;
+}
+.struct-sidebar .r-h2 {
+  position: relative;
+  color: var(--r-main-accent);
+  border: none;
+  padding: 0 0 0 13px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  margin: 24px 0 13px;
+}
+.struct-sidebar .r-h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  bottom: 1px;
+  width: 4px;
+  background: var(--r-main-accent);
+}
+.struct-sidebar .r-exp-role, .struct-sidebar .r-proj-title { color: var(--r-main-ink); }
+.struct-sidebar .r-exp-org { color: var(--r-main-accent); font-style: italic; }
+.struct-sidebar .r-proj-link, .struct-sidebar .r-proj-cat { color: var(--r-main-accent); }
+.struct-sidebar .r-exp-desc, .struct-sidebar .r-proj-desc, .struct-sidebar .r-summary { color: #45505b; }
 
 @media (max-width: 720px) {
   .rb { flex-direction: column; }
