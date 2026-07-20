@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api";
 import type { HomeData } from "../types";
+import { hostOf } from "../components/util";
 
 const STRUCTURES = [
   { key: "classic", label: "Classic (single column)" },
@@ -158,14 +159,19 @@ export function ResumeBuilder() {
           <div className="r-proj" key={pr.id}>
             <div className="r-proj-top">
               <span className="r-proj-title">{pr.title}</span>
-              {pr.category_name && <span className="r-proj-cat">{pr.category_name}</span>}
+              {pr.link_url ? (
+                <a className="r-proj-link" href={pr.link_url}>
+                  {hostOf(pr.link_url)} ↗
+                </a>
+              ) : pr.category_name ? (
+                <span className="r-proj-cat">{pr.category_name}</span>
+              ) : null}
             </div>
             {pr.summary ? (
               <div className="r-proj-desc" dangerouslySetInnerHTML={{ __html: pr.summary }} />
             ) : pr.tagline ? (
               <p className="r-proj-desc">{pr.tagline}</p>
             ) : null}
-            {pr.link_url && <span className="r-proj-link">{pr.link_url}</span>}
             {pr.skills && pr.skills.length > 0 && (
               <div className="r-proj-skills">
                 {pr.skills.map((s) => (
