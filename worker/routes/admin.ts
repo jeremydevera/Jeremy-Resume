@@ -152,7 +152,13 @@ adminRoutes.delete("/categories/:id", async (c) => {
 // ---- Resume ----
 adminRoutes.get("/resume", async (c) => {
   const r = await c.env.DB.prepare("SELECT * FROM resume_entries ORDER BY sort_order, id").all<Record<string, unknown>>();
-  return c.json(r.results.map((row) => ({ ...row, skills: JSON.parse((row.skills as string) || "[]") })));
+  return c.json(
+    r.results.map((row) => ({
+      ...row,
+      skills: JSON.parse((row.skills as string) || "[]"),
+      show_period_home: !!row.show_period_home,
+    })),
+  );
 });
 
 adminRoutes.post("/resume", async (c) => {

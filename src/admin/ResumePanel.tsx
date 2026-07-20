@@ -46,7 +46,7 @@ export function ResumePanel() {
     setKind(r.kind || "Full-time");
     setDescription(r.description || "");
     setSkillsInput((r.skills || []).join(", "));
-    setShowToHome(r.show_period_home !== false);
+    setShowToHome(!!r.show_period_home);
   };
 
   const move = async (index: number, dir: -1 | 1) => {
