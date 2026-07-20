@@ -191,13 +191,23 @@ export function ProjectEdit() {
         </div>
       </div>
 
-      <div className="field" style={{ maxWidth: 220 }}>
-        <label>Sort order (lower = first)</label>
-        <input
-          type="number"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(Number(e.target.value))}
-        />
+      <div className="row-2">
+        <div className="field">
+          <label>Sort order (lower = first)</label>
+          <input
+            type="number"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(Number(e.target.value))}
+          />
+        </div>
+        <div className="field">
+          <label>Skills / tech (comma-separated — tags on résumé)</label>
+          <input
+            value={skillsInput}
+            onChange={(e) => setSkillsInput(e.target.value)}
+            placeholder="Next.js, React, TypeScript"
+          />
+        </div>
       </div>
 
       <div className="field">
@@ -208,15 +218,6 @@ export function ProjectEdit() {
       <div className="field">
         <label>Summary</label>
         <RichTextEditor value={summary} onChange={setSummary} placeholder="Short summary (shown on cards &amp; résumé)…" />
-      </div>
-
-      <div className="field">
-        <label>Skills / tech (comma-separated — shown as tags on the résumé)</label>
-        <input
-          value={skillsInput}
-          onChange={(e) => setSkillsInput(e.target.value)}
-          placeholder="Next.js, React, TypeScript, Cloudflare Workers"
-        />
       </div>
 
       <div className="field">
