@@ -2196,3 +2196,11 @@ a.stat:hover .v {
 .btn.reorder:disabled { opacity: 0.35; cursor: default; }
 
 .admin-table .btn { white-space: nowrap; }
+
+/* rich summary inside résumé project entries */
+.r-proj-desc ul { list-style: disc; padding-left: 18px; margin: 4px 0; }
+.r-proj-desc ol { list-style: decimal; padding-left: 18px; margin: 4px 0; }
+.r-proj-desc p { margin: 2px 0; }
+.r-proj-desc strong, .r-proj-desc b { font-weight: 700; }
+.r-proj-desc em, .r-proj-desc i { font-style: italic; }
+.r-proj-desc a { color: var(--r-accent); text-decoration: underline; }

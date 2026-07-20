@@ -150,7 +150,11 @@ export function ResumeBuilder() {
               <span className="r-proj-title">{pr.title}</span>
               {pr.category_name && <span className="r-proj-cat">{pr.category_name}</span>}
             </div>
-            {(pr.summary || pr.tagline) && <p className="r-proj-desc">{pr.summary || pr.tagline}</p>}
+            {pr.summary ? (
+              <div className="r-proj-desc" dangerouslySetInnerHTML={{ __html: pr.summary }} />
+            ) : pr.tagline ? (
+              <p className="r-proj-desc">{pr.tagline}</p>
+            ) : null}
             {pr.link_url && <span className="r-proj-link">{pr.link_url}</span>}
           </div>
         ))}

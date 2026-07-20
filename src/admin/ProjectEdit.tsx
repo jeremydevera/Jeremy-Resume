@@ -201,7 +201,7 @@ export function ProjectEdit() {
 
       <div className="field">
         <label>Summary</label>
-        <input value={summary} onChange={(e) => setSummary(e.target.value)} />
+        <RichTextEditor value={summary} onChange={setSummary} placeholder="Short summary (shown on cards &amp; résumé)…" />
       </div>
 
       <div className="field">

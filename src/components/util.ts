@@ -24,6 +24,18 @@ export function hostOf(url: string): string {
   }
 }
 
+// Rich-text HTML -> plain text, for preview cards where markup shouldn't render.
+export function stripHtml(html: string): string {
+  return (html || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function initials(title: string): string {
   return title
     .split(/\s+/)

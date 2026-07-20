@@ -4,7 +4,7 @@ import { api } from "../api";
 import type { HomeData } from "../types";
 import { Layout } from "../components/Layout";
 import { ProjectsDisplay } from "../components/ProjectLayouts";
-import { hostOf, initials } from "../components/util";
+import { hostOf, initials, stripHtml } from "../components/util";
 
 export function ProjectsPage() {
   const [data, setData] = useState<HomeData | null>(null);
@@ -69,7 +69,9 @@ export function ProjectsPage() {
                   {p.category_name && <span className="cat-pill">{p.category_name}</span>}
                 </div>
                 <h3 className="pcard-title">{p.title}</h3>
-                {(p.summary || p.tagline) && <p className="pcard-desc">{p.summary || p.tagline}</p>}
+                {(p.summary || p.tagline) && (
+                  <p className="pcard-desc">{stripHtml(p.summary || p.tagline || "")}</p>
+                )}
                 <span className="pcard-actions">
                   <span className="pcard-link">view project ↗</span>
                   {p.link_url && (

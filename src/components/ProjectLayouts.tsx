@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import type { ProjectListItem } from "../types";
 import { ProjectRow } from "./ProjectRow";
 import { ProjectTile } from "./ProjectTile";
-import { initials } from "./util";
+import { initials, stripHtml } from "./util";
 
 /** Renders a project collection in the layout chosen in the admin. */
 export function ProjectsDisplay({
@@ -65,7 +65,7 @@ export function ProjectsDisplay({
               <div className="pzig-body">
                 {p.category_name && <div className="ptile-cat">{p.category_name}</div>}
                 <h3>{p.title}</h3>
-                {(p.summary || p.tagline) && <p>{p.summary || p.tagline}</p>}
+                {(p.summary || p.tagline) && <p>{stripHtml(p.summary || p.tagline || "")}</p>}
                 <span className="pcard-link">view project ↗</span>
               </div>
             </Link>
@@ -84,7 +84,7 @@ export function ProjectsDisplay({
               )}
               <div className="pcover-body">
                 <h3>{p.title}</h3>
-                {(p.summary || p.tagline) && <p>{p.summary || p.tagline}</p>}
+                {(p.summary || p.tagline) && <p>{stripHtml(p.summary || p.tagline || "")}</p>}
               </div>
               {p.category_name && <span className="pcover-cat">{p.category_name}</span>}
             </Link>
@@ -100,7 +100,7 @@ export function ProjectsDisplay({
                 <span className="pnum">{String(i + 1).padStart(2, "0")}</span>
                 <div className="pnum-body">
                   <h3>{p.title}</h3>
-                  {(p.summary || p.tagline) && <p>{p.summary || p.tagline}</p>}
+                  {(p.summary || p.tagline) && <p>{stripHtml(p.summary || p.tagline || "")}</p>}
                 </div>
                 {p.category_name && <span className="pnum-cat">{p.category_name}</span>}
               </Link>
@@ -157,7 +157,7 @@ export function ProjectsDisplay({
               <div className="pstack-inner">
                 {p.category_name && <span className="pstack-cat">{p.category_name}</span>}
                 <h3>{p.title}</h3>
-                {(p.summary || p.tagline) && <p>{p.summary || p.tagline}</p>}
+                {(p.summary || p.tagline) && <p>{stripHtml(p.summary || p.tagline || "")}</p>}
               </div>
             </Link>
           ))}
@@ -226,7 +226,7 @@ function LeadCard({ p }: { p: ProjectListItem }) {
       <div className="lead-body">
         {p.category_name && <div className="ptile-cat">{p.category_name}</div>}
         <h3>{p.title}</h3>
-        {(p.summary || p.tagline) && <p>{p.summary || p.tagline}</p>}
+        {(p.summary || p.tagline) && <p>{stripHtml(p.summary || p.tagline || "")}</p>}
         <span className="pcard-link">view project ↗</span>
       </div>
     </Link>
@@ -280,7 +280,7 @@ function Spotlight({ projects }: { projects: ProjectListItem[] }) {
         <div className="pspot-inner">
           {lead.category_name && <span className="pstack-cat">{lead.category_name}</span>}
           <h2>{lead.title}</h2>
-          {(lead.summary || lead.tagline) && <p>{lead.summary || lead.tagline}</p>}
+          {(lead.summary || lead.tagline) && <p>{stripHtml(lead.summary || lead.tagline || "")}</p>}
           <span className="pcard-link">view project ↗</span>
         </div>
       </Link>
