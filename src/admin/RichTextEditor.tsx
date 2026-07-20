@@ -39,6 +39,36 @@ export function RichTextEditor({
     if (url) exec("createLink", url.trim());
   };
 
+  // Paste as plain text so pasted markup (e.g. VS Code's colored HTML) never
+  // brings in inline colors/styles.
+  const onPaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text/plain");
+    document.execCommand("insertText", false, text);
+    emit();
+  };
+
+  // Strip all formatting from the whole field — including pasted inline styles,
+  // color/bgcolor attributes, and token classes that removeFormat leaves behind.
+  const clearAll = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.focus();
+    document.execCommand("selectAll", false);
+    document.execCommand("removeFormat", false);
+    document.execCommand("unlink", false);
+    el.querySelectorAll<HTMLElement>("[style]").forEach((n) => n.removeAttribute("style"));
+    el.querySelectorAll<HTMLElement>("[color], [bgcolor], [class]").forEach((n) => {
+      n.removeAttribute("color");
+      n.removeAttribute("bgcolor");
+      n.removeAttribute("class");
+    });
+    // unwrap leftover font/span wrappers, keeping their text
+    el.querySelectorAll("font, span").forEach((n) => n.replaceWith(...Array.from(n.childNodes)));
+    window.getSelection()?.collapseToEnd();
+    emit();
+  };
+
   const Btn = ({
     onDo,
     title,
@@ -96,7 +126,7 @@ export function RichTextEditor({
         <Btn onDo={() => exec("unlink")} title="Remove link">
           Unlink
         </Btn>
-        <Btn onDo={() => exec("removeFormat")} title="Clear formatting">
+        <Btn onDo={clearAll} title="Clear all formatting">
           Clear
         </Btn>
       </div>
@@ -109,6 +139,7 @@ export function RichTextEditor({
         aria-label="Description editor"
         data-placeholder={placeholder}
         suppressContentEditableWarning
+        onPaste={onPaste}
         onInput={emit}
         onBlur={emit}
       />
