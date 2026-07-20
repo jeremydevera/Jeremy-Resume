@@ -1514,17 +1514,28 @@ a.stat:hover .v {
     z-index: 30;
     border-right: none;
     border-bottom: 1px solid var(--line);
-    padding: 16px 20px;
+    padding: 14px 20px;
     background: var(--bg);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
   .sidebar .brand {
     margin-bottom: 12px;
   }
   .sidebar nav {
+    flex: 1;
+    min-width: 0;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
+  }
+  /* theme toggle sits on the right of the same row as the tabs */
+  .sidebar .theme-label {
+    display: none;
   }
   /* dissolve the group boxes so all tabs flow/wrap as one row */
   .sidebar .nav-group {
@@ -1555,10 +1566,10 @@ a.stat:hover .v {
     content: none;
   }
   .sidebar .sidebar-foot {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid var(--line);
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: none;
+    flex-shrink: 0;
   }
   .content {
     padding: 32px 22px 90px;
