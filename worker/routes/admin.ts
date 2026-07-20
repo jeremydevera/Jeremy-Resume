@@ -210,7 +210,7 @@ adminRoutes.put("/profile", async (c) => {
     `UPDATE site_profile SET
       name = ?, tagline = ?, bio = ?, email = ?, avatar_key = ?, available_for_hire = ?,
       socials = ?, stats = ?, location = ?, home_layout = ?,
-      projects_layout = ?, experience_layout = ?
+      projects_layout = ?, experience_layout = ?, experience_intro = ?
      WHERE id = 1`,
   )
     .bind(
@@ -226,6 +226,7 @@ adminRoutes.put("/profile", async (c) => {
       b.home_layout ?? "list",
       b.projects_layout ?? "cards",
       b.experience_layout ?? "timeline",
+      b.experience_intro ?? "",
     )
     .run();
   return c.json({ ok: true });

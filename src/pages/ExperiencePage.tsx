@@ -24,8 +24,8 @@ export function ExperiencePage() {
     <Layout>
       <h1 className="page-title">experience</h1>
       <p className="page-intro">
-        Building automation, systems, and the web — here’s the path so far, and what I worked on
-        along the way.
+        {data.profile?.experience_intro?.trim() ||
+          "Building automation, systems, and the web — here’s the path so far, and what I worked on along the way."}
       </p>
 
       {layout === "list" ? (

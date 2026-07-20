@@ -19,6 +19,7 @@ export function ProfilePanel() {
   const [homeLayout, setHomeLayout] = useState("list");
   const [projectsLayout, setProjectsLayout] = useState("cards");
   const [experienceLayout, setExperienceLayout] = useState("timeline");
+  const [experienceIntro, setExperienceIntro] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -41,6 +42,7 @@ export function ProfilePanel() {
         setHomeLayout(p.home_layout || "list");
         setProjectsLayout(p.projects_layout || "cards");
         setExperienceLayout(p.experience_layout || "timeline");
+        setExperienceIntro(p.experience_intro || "");
       })
       .catch(() => {});
   }, []);
@@ -78,6 +80,7 @@ export function ProfilePanel() {
         home_layout: homeLayout,
         projects_layout: projectsLayout,
         experience_layout: experienceLayout,
+        experience_intro: experienceIntro,
       });
       setNotice("Profile saved.");
       toast("success", "Profile saved to database");
@@ -163,6 +166,16 @@ export function ProfilePanel() {
             <option value="compact">Compact (one-liners)</option>
           </select>
         </div>
+      </div>
+
+      <div className="field">
+        <label>Experience page intro</label>
+        <textarea
+          value={experienceIntro}
+          onChange={(e) => setExperienceIntro(e.target.value)}
+          rows={3}
+          placeholder="Building automation, systems, and the web — here's the path so far…"
+        />
       </div>
 
       <div className="field">

@@ -30,6 +30,7 @@ export interface Profile {
   home_layout?: string;
   projects_layout?: string;
   experience_layout?: string;
+  experience_intro?: string;
 }
 
 export interface ProjectImage {
