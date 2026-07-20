@@ -32,7 +32,7 @@ export function ExperiencePage() {
         <div className="exp">
           {resume.map((e) => (
             <div className="row" key={e.id}>
-              <div className="year">{e.period}</div>
+              <div className="year">{e.show_period_home ? e.period : ""}</div>
               <div>
                 <div className="role">{e.role}</div>
                 <div className="org">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
@@ -48,7 +48,7 @@ export function ExperiencePage() {
           {resume.map((e) => (
             <div className="exp-card" key={e.id}>
               <div className="exp-monogram">{initials(e.org || e.role)}</div>
-              <div className="exp-role-date">{e.period}</div>
+              <div className="exp-role-date">{e.show_period_home ? e.period : ""}</div>
               <div className="exp-card-role">{e.role}</div>
               <div className="exp-metaline">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
               {e.description && (
@@ -70,7 +70,7 @@ export function ExperiencePage() {
         <div className="exp-compact">
           {resume.map((e) => (
             <div className="exp-compact-row" key={e.id}>
-              <span className="exp-role-date">{e.period}</span>
+              <span className="exp-role-date">{e.show_period_home ? e.period : ""}</span>
               <span className="exp-compact-role">{e.role}</span>
               <span className="pcompact-dots" />
               <span className="exp-metaline">{e.org}</span>
@@ -82,7 +82,7 @@ export function ExperiencePage() {
           {resume.map((e) => (
             <div className="exp-card" key={e.id}>
               <div className="exp-monogram">{initials(e.org || e.role)}</div>
-              <div className="exp-role-date">{e.period}</div>
+              <div className="exp-role-date">{e.show_period_home ? e.period : ""}</div>
               <div className="exp-card-role">{e.role}</div>
               <div className="exp-metaline">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
               {e.description && (
@@ -108,7 +108,7 @@ export function ExperiencePage() {
               <div className="exp-num-body">
                 <div className="exp-card-role">{e.role}</div>
                 <div className="exp-metaline">{[e.org, e.kind, e.location].filter(Boolean).join(" · ")}</div>
-                <div className="exp-role-date">{e.period}</div>
+                <div className="exp-role-date">{e.show_period_home ? e.period : ""}</div>
                 {e.description && (
                   <div className="exp-desc" dangerouslySetInnerHTML={{ __html: e.description }} />
                 )}
@@ -128,7 +128,7 @@ export function ExperiencePage() {
                 </div>
                 <div className="exp-role">
                   <div className="exp-role-title">{e.role}</div>
-                  <div className="exp-role-date">{e.period}</div>
+                  <div className="exp-role-date">{e.show_period_home ? e.period : ""}</div>
                   {e.description && (
                   <div className="exp-desc" dangerouslySetInnerHTML={{ __html: e.description }} />
                 )}

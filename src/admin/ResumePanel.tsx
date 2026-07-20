@@ -149,7 +149,7 @@ export function ResumePanel() {
         <div className="field">
           <label className="checkbox" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
             <input type="checkbox" checked={showToHome} onChange={(e) => setShowToHome(e.target.checked)} />
-            <span>SHOW DATE TO HOME <span style={{ color: "var(--muted)" }}>— shows the period on the homepage (the downloaded résumé always shows dates)</span></span>
+            <span>SHOW DATE TO HOME <span style={{ color: "var(--muted)" }}>— shows the period on the public site (Home &amp; Experience). The downloaded résumé always shows dates.</span></span>
           </label>
         </div>
         <button className="btn primary" type="submit">
