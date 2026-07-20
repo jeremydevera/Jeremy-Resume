@@ -10,10 +10,16 @@ export function ProjectsPage() {
   const [data, setData] = useState<HomeData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState("all");
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 10;
 
   useEffect(() => {
     api.get<HomeData>("/api/home").then(setData).catch((e) => setError(e.message));
   }, []);
+
+  useEffect(() => {
+    setPage(1); // reset to first page when the filter changes
+  }, [active]);
 
   const filtered = useMemo(() => {
     if (!data) return [];
@@ -26,6 +32,14 @@ export function ProjectsPage() {
   const usedSlugs = new Set(data.projects.map((p) => p.category_slug));
   const cats = data.categories.filter((c) => usedSlugs.has(c.slug));
   const layout = data.profile?.projects_layout || "cards";
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const current = Math.min(page, totalPages);
+  const pageItems = filtered.slice((current - 1) * PER_PAGE, current * PER_PAGE);
+  const goPage = (n: number) => {
+    setPage(n);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Layout>
@@ -53,10 +67,10 @@ export function ProjectsPage() {
       )}
 
       {layout !== "cards" ? (
-        <ProjectsDisplay projects={filtered} layout={layout} />
+        <ProjectsDisplay projects={pageItems} layout={layout} />
       ) : (
         <div className="pcards">
-          {filtered.map((p) => (
+          {pageItems.map((p) => (
             <div key={p.id} className="pcard">
               <Link to={`/projects/${p.slug}`} className="pcard-overlay" aria-label={p.title} />
               {p.cover_url ? (
@@ -88,6 +102,30 @@ export function ProjectsPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="pager">
+          <button className="pager-btn" disabled={current === 1} onClick={() => goPage(current - 1)}>
+            ← prev
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              className={`pager-num${n === current ? " active" : ""}`}
+              onClick={() => goPage(n)}
+            >
+              {n}
+            </button>
+          ))}
+          <button
+            className="pager-btn"
+            disabled={current === totalPages}
+            onClick={() => goPage(current + 1)}
+          >
+            next →
+          </button>
         </div>
       )}
     </Layout>

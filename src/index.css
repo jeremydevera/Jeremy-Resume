@@ -2204,3 +2204,18 @@ a.stat:hover .v {
 .r-proj-desc strong, .r-proj-desc b { font-weight: 700; }
 .r-proj-desc em, .r-proj-desc i { font-style: italic; }
 .r-proj-desc a { color: var(--r-accent); text-decoration: underline; }
+
+/* ============ Pagination ============ */
+.pager {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin-top: 40px; justify-content: center;
+}
+.pager-btn, .pager-num {
+  font-family: var(--font-mono); font-size: 12px;
+  padding: 7px 12px; border: 1px solid var(--line-strong); border-radius: 8px;
+  background: var(--bg); color: var(--text); cursor: pointer; line-height: 1;
+}
+.pager-num { min-width: 34px; text-align: center; }
+.pager-btn:hover:not(:disabled), .pager-num:hover { border-color: var(--muted); }
+.pager-btn:disabled { opacity: 0.4; cursor: default; }
+.pager-num.active { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
