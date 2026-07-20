@@ -23,6 +23,7 @@ export function ProjectEdit() {
   const toast = useToast();
   const coverInput = useRef<HTMLInputElement>(null);
   const galleryInput = useRef<HTMLInputElement>(null);
+  const replaceInput = useRef<HTMLInputElement>(null);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [title, setTitle] = useState("");
@@ -42,7 +43,8 @@ export function ProjectEdit() {
   const [bodyMode, setBodyMode] = useState<"rich" | "markdown">("rich");
   // crop pipeline: files wait here until cropped (or used as-is), then upload
   const [cropQueue, setCropQueue] = useState<File[]>([]);
-  const [cropTarget, setCropTarget] = useState<"cover" | "gallery">("cover");
+  const [cropTarget, setCropTarget] = useState<"cover" | "gallery" | "replace">("cover");
+  const [replaceIdx, setReplaceIdx] = useState<number | null>(null);
 
   useEffect(() => {
     api.get<Category[]>("/api/categories").then(setCategories).catch(() => {});
@@ -83,18 +85,27 @@ export function ProjectEdit() {
     setBusy(true);
     try {
       const { key } = await api.upload(file, `projects/${slug || "misc"}`);
-      if (cropTarget === "cover") setCoverKey(key);
-      else setImages((prev) => [...prev, { r2_key: key, alt: "", url: `/img/${key}` }]);
+      if (cropTarget === "cover") {
+        setCoverKey(key);
+      } else if (cropTarget === "replace" && replaceIdx !== null) {
+        const idx = replaceIdx;
+        setImages((prev) =>
+          prev.map((x, j) => (j === idx ? { ...x, r2_key: key, url: `/img/${key}` } : x)),
+        );
+      } else {
+        setImages((prev) => [...prev, { r2_key: key, alt: "", url: `/img/${key}` }]);
+      }
     } catch (e) {
       setError((e as { message?: string }).message || "Upload failed");
       toast("error", "Image upload failed");
     } finally {
       setBusy(false);
+      setReplaceIdx(null);
       setCropQueue((q) => q.slice(1)); // advance to next queued file (if any)
     }
   };
 
-  const startCrop = (target: "cover" | "gallery", files: FileList) => {
+  const startCrop = (target: "cover" | "gallery" | "replace", files: FileList) => {
     setCropTarget(target);
     setCropQueue(Array.from(files));
   };
@@ -278,6 +289,16 @@ export function ProjectEdit() {
               }
             />
             <button
+              className="btn"
+              type="button"
+              onClick={() => {
+                setReplaceIdx(i);
+                replaceInput.current?.click();
+              }}
+            >
+              Replace
+            </button>
+            <button
               className="btn danger"
               type="button"
               onClick={() => {
@@ -291,6 +312,16 @@ export function ProjectEdit() {
         <button className="btn" type="button" onClick={() => galleryInput.current?.click()}>
           + Add images
         </button>
+        <input
+          ref={replaceInput}
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={(e) => {
+            if (e.target.files?.length) startCrop("replace", e.target.files);
+            e.target.value = "";
+          }}
+        />
         <input
           ref={galleryInput}
           type="file"
