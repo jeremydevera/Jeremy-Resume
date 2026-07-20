@@ -176,6 +176,16 @@ adminRoutes.post("/resume", async (c) => {
   return c.json({ id: res.meta.last_row_id }, 201);
 });
 
+adminRoutes.post("/resume/reorder", async (c) => {
+  const b = await c.req.json();
+  const ids: number[] = Array.isArray(b.ids) ? b.ids : [];
+  if (ids.length) {
+    const stmt = c.env.DB.prepare("UPDATE resume_entries SET sort_order = ? WHERE id = ?");
+    await c.env.DB.batch(ids.map((id, i) => stmt.bind(i, id)));
+  }
+  return c.json({ ok: true });
+});
+
 adminRoutes.put("/resume/:id", async (c) => {
   const id = Number(c.req.param("id"));
   const b = await c.req.json();

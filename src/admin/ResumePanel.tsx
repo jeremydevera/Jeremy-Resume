@@ -15,7 +15,6 @@ export function ResumePanel() {
   const [kind, setKind] = useState("Full-time");
   const [description, setDescription] = useState("");
   const [skillsInput, setSkillsInput] = useState("");
-  const [sortOrder, setSortOrder] = useState(0);
   const [showToHome, setShowToHome] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
@@ -35,7 +34,6 @@ export function ResumePanel() {
     setKind("Full-time");
     setDescription("");
     setSkillsInput("");
-    setSortOrder(0);
     setShowToHome(true);
   };
 
@@ -48,8 +46,21 @@ export function ResumePanel() {
     setKind(r.kind || "Full-time");
     setDescription(r.description || "");
     setSkillsInput((r.skills || []).join(", "));
-    setSortOrder(r.sort_order);
     setShowToHome(r.show_period_home !== false);
+  };
+
+  const move = async (index: number, dir: -1 | 1) => {
+    const j = index + dir;
+    if (j < 0 || j >= entries.length) return;
+    const arr = [...entries];
+    [arr[index], arr[j]] = [arr[j], arr[index]];
+    setEntries(arr); // optimistic
+    try {
+      await api.post("/api/admin/resume/reorder", { ids: arr.map((e) => e.id) });
+    } catch {
+      toast("error", "Reorder failed");
+      load();
+    }
   };
 
   const save = async (e: React.FormEvent) => {
@@ -63,7 +74,7 @@ export function ResumePanel() {
       kind,
       description,
       skills: skillsInput.split(",").map((s) => s.trim()).filter(Boolean),
-      sort_order: sortOrder,
+      sort_order: editing ? editing.sort_order : entries.length,
       show_period_home: showToHome,
     };
     try {
@@ -135,10 +146,6 @@ export function ResumePanel() {
           <label>Description</label>
           <RichTextEditor value={description} onChange={setDescription} />
         </div>
-        <div className="field" style={{ maxWidth: 200 }}>
-          <label>Sort order</label>
-          <input type="number" value={sortOrder} onChange={(e) => setSortOrder(Number(e.target.value))} />
-        </div>
         <div className="field">
           <label className="checkbox" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
             <input type="checkbox" checked={showToHome} onChange={(e) => setShowToHome(e.target.checked)} />
@@ -158,6 +165,7 @@ export function ResumePanel() {
       <table className="admin-table">
         <thead>
           <tr>
+            <th style={{ width: 70 }}>Order</th>
             <th>Period</th>
             <th>Role</th>
             <th>Org</th>
@@ -165,8 +173,21 @@ export function ResumePanel() {
           </tr>
         </thead>
         <tbody>
-          {entries.map((r) => (
+          {entries.map((r, i) => (
             <tr key={r.id}>
+              <td>
+                <button className="btn reorder" title="Move up" disabled={i === 0} onClick={() => move(i, -1)}>
+                  ↑
+                </button>{" "}
+                <button
+                  className="btn reorder"
+                  title="Move down"
+                  disabled={i === entries.length - 1}
+                  onClick={() => move(i, 1)}
+                >
+                  ↓
+                </button>
+              </td>
               <td>{r.period}</td>
               <td>{r.role}</td>
               <td style={{ color: "var(--muted)" }}>{[r.org, r.location].filter(Boolean).join(" · ")}</td>

@@ -2191,3 +2191,6 @@ a.stat:hover .v {
 }
 .carousel-thumb.active { opacity: 1; border-color: var(--text); }
 .carousel-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.btn.reorder { padding: 3px 9px; font-size: 13px; line-height: 1; }
+.btn.reorder:disabled { opacity: 0.35; cursor: default; }
