@@ -16,6 +16,7 @@ export function ResumePanel() {
   const [description, setDescription] = useState("");
   const [skillsInput, setSkillsInput] = useState("");
   const [sortOrder, setSortOrder] = useState(0);
+  const [showToHome, setShowToHome] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
   const confirm = useConfirm();
@@ -35,6 +36,7 @@ export function ResumePanel() {
     setDescription("");
     setSkillsInput("");
     setSortOrder(0);
+    setShowToHome(true);
   };
 
   const startEdit = (r: ResumeEntry) => {
@@ -47,6 +49,7 @@ export function ResumePanel() {
     setDescription(r.description || "");
     setSkillsInput((r.skills || []).join(", "));
     setSortOrder(r.sort_order);
+    setShowToHome(r.show_period_home !== false);
   };
 
   const save = async (e: React.FormEvent) => {
@@ -61,6 +64,7 @@ export function ResumePanel() {
       description,
       skills: skillsInput.split(",").map((s) => s.trim()).filter(Boolean),
       sort_order: sortOrder,
+      show_period_home: showToHome,
     };
     try {
       if (editing) await api.put(`/api/admin/resume/${editing.id}`, payload);
@@ -134,6 +138,12 @@ export function ResumePanel() {
         <div className="field" style={{ maxWidth: 200 }}>
           <label>Sort order</label>
           <input type="number" value={sortOrder} onChange={(e) => setSortOrder(Number(e.target.value))} />
+        </div>
+        <div className="field">
+          <label className="checkbox" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+            <input type="checkbox" checked={showToHome} onChange={(e) => setShowToHome(e.target.checked)} />
+            <span>Show to Home <span style={{ color: "var(--muted)" }}>— show this entry’s period on the homepage</span></span>
+          </label>
         </div>
         <button className="btn primary" type="submit">
           {editing ? "Update entry" : "Add entry"}

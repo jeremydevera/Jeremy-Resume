@@ -159,7 +159,7 @@ adminRoutes.post("/resume", async (c) => {
   const b = await c.req.json();
   if (!b.role) return c.json({ error: "role is required" }, 400);
   const res = await c.env.DB.prepare(
-    "INSERT INTO resume_entries (period, role, org, location, kind, description, skills, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO resume_entries (period, role, org, location, kind, description, skills, sort_order, show_period_home) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   )
     .bind(
       b.period ?? "",
@@ -170,6 +170,7 @@ adminRoutes.post("/resume", async (c) => {
       b.description ?? "",
       JSON.stringify(b.skills ?? []),
       b.sort_order ?? 0,
+      b.show_period_home ? 1 : 0,
     )
     .run();
   return c.json({ id: res.meta.last_row_id }, 201);
@@ -179,7 +180,7 @@ adminRoutes.put("/resume/:id", async (c) => {
   const id = Number(c.req.param("id"));
   const b = await c.req.json();
   await c.env.DB.prepare(
-    "UPDATE resume_entries SET period = ?, role = ?, org = ?, location = ?, kind = ?, description = ?, skills = ?, sort_order = ? WHERE id = ?",
+    "UPDATE resume_entries SET period = ?, role = ?, org = ?, location = ?, kind = ?, description = ?, skills = ?, sort_order = ?, show_period_home = ? WHERE id = ?",
   )
     .bind(
       b.period ?? "",
@@ -190,6 +191,7 @@ adminRoutes.put("/resume/:id", async (c) => {
       b.description ?? "",
       JSON.stringify(b.skills ?? []),
       b.sort_order ?? 0,
+      b.show_period_home ? 1 : 0,
       id,
     )
     .run();

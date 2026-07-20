@@ -43,7 +43,11 @@ async function listPublishedProjects(env: Env, categorySlug: string | null) {
 
 async function getResume(env: Env) {
   const r = await env.DB.prepare("SELECT * FROM resume_entries ORDER BY sort_order, id").all<Record<string, unknown>>();
-  return r.results.map((row) => ({ ...row, skills: JSON.parse((row.skills as string) || "[]") }));
+  return r.results.map((row) => ({
+    ...row,
+    skills: JSON.parse((row.skills as string) || "[]"),
+    show_period_home: !!row.show_period_home,
+  }));
 }
 
 publicRoutes.get("/home", async (c) => {

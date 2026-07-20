@@ -72,6 +72,7 @@ export interface ResumeEntry {
   description?: string;
   skills: string[];
   sort_order: number;
+  show_period_home?: boolean;
 }
 
 export interface HomeData {
