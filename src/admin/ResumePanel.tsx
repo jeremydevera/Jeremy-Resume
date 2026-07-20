@@ -191,13 +191,15 @@ export function ResumePanel() {
               <td>{r.period}</td>
               <td>{r.role}</td>
               <td style={{ color: "var(--muted)" }}>{[r.org, r.location].filter(Boolean).join(" · ")}</td>
-              <td style={{ textAlign: "right" }}>
-                <button className="btn" onClick={() => startEdit(r)}>
-                  Edit
-                </button>{" "}
-                <button className="btn danger" onClick={() => remove(r)}>
-                  Delete
-                </button>
+              <td>
+                <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", flexWrap: "nowrap" }}>
+                  <button className="btn" onClick={() => startEdit(r)}>
+                    Edit
+                  </button>
+                  <button className="btn danger" onClick={() => remove(r)}>
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

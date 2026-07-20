@@ -2194,3 +2194,5 @@ a.stat:hover .v {
 
 .btn.reorder { padding: 3px 9px; font-size: 13px; line-height: 1; }
 .btn.reorder:disabled { opacity: 0.35; cursor: default; }
+
+.admin-table .btn { white-space: nowrap; }
