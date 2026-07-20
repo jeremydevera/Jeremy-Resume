@@ -1522,19 +1522,13 @@ a.stat:hover .v {
   }
   .sidebar nav {
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .sidebar nav::-webkit-scrollbar {
-    display: none;
   }
   .sidebar .nav-group {
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
     border-top: none;
     padding: 0;
