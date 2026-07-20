@@ -1551,10 +1551,38 @@ a.stat:hover .v {
     color: var(--text);
     cursor: pointer;
   }
-  .nav-burger svg {
-    width: 26px;
-    height: 26px;
-    stroke-width: 2;
+  .burger-box {
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 14px;
+  }
+  .burger-bar {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  }
+  .burger-bar:nth-child(1) { top: 0; }
+  .burger-bar:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .burger-bar:nth-child(3) { bottom: 0; }
+  .nav-burger.is-open .burger-bar:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .nav-burger.is-open .burger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-burger.is-open .burger-bar:nth-child(3) {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .burger-bar { transition: none; }
   }
   /* dropdown: in-flow, full width below the bar */
   .sidebar nav {
