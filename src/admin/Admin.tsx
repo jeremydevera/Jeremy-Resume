@@ -78,28 +78,43 @@ export function Admin() {
 }
 
 function Chrome({ email, onLogout }: { email: string; onLogout: () => void }) {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <div className="admin-bar">
         <div className="container inner">
           <span className="brand">Admin</span>
-          <nav className="nav">
-            <NavLink to="/admin/projects">Projects</NavLink>
-            <NavLink to="/admin/categories">Categories</NavLink>
-            <NavLink to="/admin/resume">Experience</NavLink>
-            <NavLink to="/admin/profile">Profile</NavLink>
-          </nav>
-          <span className="spacer" />
-          <ThemeSwitch showLabel={false} />
-          <a href="/" className="nav" style={{ color: "var(--muted)" }}>
-            View site
-          </a>
-          <a className="btn" href="/resume" target="_blank" rel="noreferrer">
-            Résumé ↓
-          </a>
-          <button className="btn" onClick={onLogout} title={`Signed in as ${email}`}>
-            Log out
+          <button
+            className={`nav-burger admin-burger${open ? " is-open" : ""}`}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            onClick={() => setOpen((o) => !o)}
+          >
+            <span className="burger-box">
+              <span className="burger-bar" />
+              <span className="burger-bar" />
+              <span className="burger-bar" />
+            </span>
           </button>
+          <div className={`admin-menu${open ? " open" : ""}`} onClick={() => setOpen(false)}>
+            <nav className="nav">
+              <NavLink to="/admin/projects">Projects</NavLink>
+              <NavLink to="/admin/categories">Categories</NavLink>
+              <NavLink to="/admin/resume">Experience</NavLink>
+              <NavLink to="/admin/profile">Profile</NavLink>
+            </nav>
+            <span className="spacer" />
+            <ThemeSwitch showLabel={false} />
+            <a href="/" className="nav" style={{ color: "var(--muted)" }}>
+              View site
+            </a>
+            <a className="btn" href="/resume" target="_blank" rel="noreferrer">
+              Résumé ↓
+            </a>
+            <button className="btn" onClick={onLogout} title={`Signed in as ${email}`}>
+              Log out
+            </button>
+          </div>
         </div>
       </div>
       <div className="admin-main">

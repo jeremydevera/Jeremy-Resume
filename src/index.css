@@ -1101,10 +1101,50 @@ a.stat:hover .v {
 .admin-bar .spacer {
   flex: 1;
 }
+/* desktop: menu items flow inline in the bar */
+.admin-menu {
+  display: contents;
+}
 .admin-main {
   max-width: 820px;
   margin: 0 auto;
   padding: 34px 24px 90px;
+}
+
+/* ---- Admin bar: burger on mobile (no horizontal scroll) ---- */
+@media (max-width: 900px) {
+  .admin-bar .inner {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 10px 14px;
+    padding: 12px 20px;
+  }
+  .admin-menu {
+    display: none;
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 6px 0 4px;
+  }
+  .admin-menu.open {
+    display: flex;
+  }
+  .admin-menu .nav {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .admin-menu .spacer {
+    display: none;
+  }
+  /* keep wide tables from pushing the page sideways */
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 .admin-login {
   max-width: 380px;
