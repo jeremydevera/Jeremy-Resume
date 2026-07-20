@@ -44,7 +44,9 @@ export function ProjectDetailPage() {
         {(() => {
           const slides = [
             ...(project.cover_url ? [{ url: project.cover_url, alt: project.title }] : []),
-            ...project.images.map((im) => ({ url: im.url, alt: im.alt || project.title })),
+            ...project.images
+              .filter((im): im is typeof im & { url: string } => !!im.url)
+              .map((im) => ({ url: im.url, alt: im.alt || project.title })),
           ];
           return slides.length > 0 ? (
             <Carousel images={slides} />
