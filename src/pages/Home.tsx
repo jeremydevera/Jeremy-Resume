@@ -138,7 +138,7 @@ export function Home() {
           </div>
           {data.resume.map((r) => (
             <div className="row" key={r.id}>
-              <div className="year">{r.show_period_home ? r.period : ""}</div>
+              <div className="year">{r.show_period_home ? r.period : r.kind}</div>
               <div>
                 <div className="role">{r.role}</div>
                 <div className="org">{[r.org, r.location].filter(Boolean).join(" · ")}</div>
