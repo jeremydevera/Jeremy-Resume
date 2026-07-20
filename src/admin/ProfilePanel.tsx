@@ -97,6 +97,9 @@ export function ProfilePanel() {
     <form onSubmit={save}>
       <div className="toolbar">
         <h1>Profile</h1>
+        <a className="btn" href="/resume" target="_blank" rel="noreferrer">
+          Download résumé (PDF) ↓
+        </a>
         <button className="btn primary" type="submit" disabled={busy}>
           {busy ? "Saving…" : "Save"}
         </button>
