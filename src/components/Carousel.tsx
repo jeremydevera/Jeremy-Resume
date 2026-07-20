@@ -26,7 +26,13 @@ export function Carousel({ images }: { images: Slide[] }) {
   return (
     <div className="carousel">
       <div className="carousel-stage">
-        <img src={images[i].url} alt={images[i].alt} />
+        <div className="carousel-track" style={{ transform: `translateX(-${i * 100}%)` }}>
+          {images.map((im, idx) => (
+            <div className="carousel-slide" key={idx}>
+              <img src={im.url} alt={im.alt} />
+            </div>
+          ))}
+        </div>
         {n > 1 && (
           <>
             <button className="carousel-nav prev" onClick={() => go(-1)} aria-label="Previous image">
