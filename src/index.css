@@ -1521,45 +1521,50 @@ a.stat:hover .v {
     padding: 12px 20px;
     background: var(--bg);
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .nav-burger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    background: none;
-    border: 1px solid var(--line-strong);
-    border-radius: 8px;
-    color: var(--text);
-    cursor: pointer;
-  }
-  .nav-burger svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 2;
+    gap: 8px 12px;
   }
   .sidebar .theme-label {
     display: none;
   }
-  /* burger dropdown menu */
+  /* theme toggle on the left */
+  .sidebar .sidebar-foot {
+    order: 1;
+    margin: 0;
+    padding: 0;
+    border-top: none;
+    flex-shrink: 0;
+  }
+  /* burger = just the 3 lines, on the right */
+  .nav-burger {
+    order: 2;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 4px;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .nav-burger svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2;
+  }
+  /* dropdown: in-flow, full width below the bar */
   .sidebar nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
     display: none;
     flex-direction: column;
     gap: 2px;
-    padding: 8px 14px 14px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+    padding-top: 8px;
   }
   .sidebar nav.open {
     display: flex;
@@ -1589,12 +1594,6 @@ a.stat:hover .v {
   }
   .sidebar a.nav-link.active::before {
     content: none;
-  }
-  .sidebar .sidebar-foot {
-    margin: 0;
-    padding: 0;
-    border-top: none;
-    flex-shrink: 0;
   }
   .content {
     padding: 32px 22px 90px;
