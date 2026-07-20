@@ -1035,7 +1035,8 @@ a.stat:hover .v {
 @media (max-width: 560px) {
   .ptiles.grid-3,
   .ptiles.grid-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
   .digest-lead {
     grid-template-columns: 1fr;
@@ -1521,13 +1522,20 @@ a.stat:hover .v {
   }
   .sidebar nav {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 4px 16px;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .sidebar nav::-webkit-scrollbar {
+    display: none;
   }
   .sidebar .nav-group {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
     border-top: none;
     padding: 0;
   }
@@ -1536,6 +1544,7 @@ a.stat:hover .v {
     padding: 6px 12px;
     border-radius: 999px;
     border: 1px solid transparent;
+    white-space: nowrap;
   }
   .sidebar a.nav-link.active {
     background: var(--accent);
@@ -1926,7 +1935,7 @@ a.stat:hover .v {
   .pmosaic-item.lead { grid-column: span 2; grid-row: span 1; }
 }
 @media (max-width: 560px) {
-  .ptiles.grid-5, .ptiles.tiles-xl { grid-template-columns: 1fr; }
+  .ptiles.grid-5, .ptiles.tiles-xl { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .pzig-row, .pzig-row:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
   .pcover-thumb { width: 84px; height: 56px; }
 }
