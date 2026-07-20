@@ -4,6 +4,7 @@ import { api } from "../api";
 import type { ProjectDetail } from "../types";
 import { Layout } from "../components/Layout";
 import { Markdown } from "../components/Markdown";
+import { Carousel } from "../components/Carousel";
 import { hostOf, initials } from "../components/util";
 
 export function ProjectDetailPage() {
@@ -40,21 +41,19 @@ export function ProjectDetailPage() {
           </p>
         )}
 
-        {project.cover_url ? (
-          <img className="cover" src={project.cover_url} alt={project.title} />
-        ) : (
-          <div className="cover-ph">{initials(project.title)}</div>
-        )}
+        {(() => {
+          const slides = [
+            ...(project.cover_url ? [{ url: project.cover_url, alt: project.title }] : []),
+            ...project.images.map((im) => ({ url: im.url, alt: im.alt || project.title })),
+          ];
+          return slides.length > 0 ? (
+            <Carousel images={slides} />
+          ) : (
+            <div className="cover-ph">{initials(project.title)}</div>
+          );
+        })()}
 
         {project.body_markdown && <Markdown source={project.body_markdown} />}
-
-        {project.images.length > 0 && (
-          <div className="gallery">
-            {project.images.map((img) => (
-              <img key={img.id} src={img.url} alt={img.alt || project.title} />
-            ))}
-          </div>
-        )}
       </article>
     </Layout>
   );
