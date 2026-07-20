@@ -2153,7 +2153,7 @@ a.stat:hover .v {
 .r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
 .r-proj-title { font-weight: 600; }
 .r-proj-cat { color: var(--r-muted); font-size: 11px; white-space: nowrap; }
-.r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; }
+.r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; padding-left: 14px; }
 .r-proj-link { font-size: 11px; color: var(--r-accent); }
 .r-skills { display: flex; flex-wrap: wrap; gap: 6px; }
 .r-skill { border: 1px solid var(--r-line); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--r-ink); }

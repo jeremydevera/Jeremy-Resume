@@ -142,7 +142,7 @@ export function ResumeBuilder() {
 
   const projectsSection = chosenProjects.length > 0 && (
     <section className="r-section">
-      <h2 className="r-h2">Selected Projects</h2>
+      <h2 className="r-h2">Projects</h2>
       <div className="r-proj-list">
         {chosenProjects.map((pr) => (
           <div className="r-proj" key={pr.id}>
