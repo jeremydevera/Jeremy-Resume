@@ -1524,7 +1524,7 @@ a.stat:hover .v {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
   /* dissolve the group boxes so all tabs flow/wrap as one row */
   .sidebar .nav-group {
@@ -1532,10 +1532,16 @@ a.stat:hover .v {
   }
   /* mobile: clear active-tab highlight (accent pill) */
   .sidebar a.nav-link {
-    padding: 6px 12px;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 11px;
     border-radius: 999px;
     border: 1px solid transparent;
     white-space: nowrap;
+  }
+  .sidebar a.nav-link svg {
+    width: 13px;
+    height: 13px;
   }
   .sidebar a.nav-link.active {
     background: var(--accent);
