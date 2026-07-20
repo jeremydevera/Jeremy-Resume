@@ -2261,3 +2261,23 @@ a.stat:hover .v {
 .pager-btn:hover:not(:disabled), .pager-num:hover { border-color: var(--muted); }
 .pager-btn:disabled { opacity: 0.4; cursor: default; }
 .pager-num.active { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+
+/* ============ Email copy popover ============ */
+.emailpop { position: relative; display: inline-flex; }
+.emailpop-trigger {
+  background: none; border: none; padding: 0; cursor: pointer;
+  color: var(--muted); font-family: var(--font-mono); font-size: 13px;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.emailpop-trigger:hover { color: var(--text); }
+.emailpop-backdrop { position: fixed; inset: 0; z-index: 40; }
+.emailpop-card {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 41;
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px;
+  padding: 14px; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+  display: flex; flex-direction: column; gap: 10px; min-width: 250px;
+  animation: cd-pop 0.14s ease;
+}
+.emailpop-addr { font-family: var(--font-mono); font-size: 13px; color: var(--text); word-break: break-all; }
+.emailpop-actions { display: flex; gap: 8px; }
+.emailpop-actions .btn { flex: 1; text-align: center; }

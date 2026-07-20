@@ -4,6 +4,7 @@ import { api } from "../api";
 import type { HomeData } from "../types";
 import { Layout } from "../components/Layout";
 import { ProjectsDisplay } from "../components/ProjectLayouts";
+import { EmailButton } from "../components/EmailButton";
 import { initials } from "../components/util";
 
 export function Home() {
@@ -63,7 +64,7 @@ export function Home() {
                 {s.label} <span className="arr">↗</span>
               </a>
             ))}
-            {p?.email && <a href={`mailto:${p.email}`}>email</a>}
+            {p?.email && <EmailButton email={p.email} />}
           </div>
         </div>
       </section>
