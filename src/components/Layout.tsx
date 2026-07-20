@@ -1,6 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { ThemeSwitch } from "./ThemeSwitch";
+
+const IconMenu = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M3 6h18M3 12h18M3 18h18" />
+  </svg>
+);
+const IconClose = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M6 6l12 12M18 6L6 18" />
+  </svg>
+);
 
 const IconHome = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -19,10 +30,19 @@ const IconBag = () => (
   </svg>
 );
 export function Layout({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="shell">
       <aside className="sidebar">
-        <nav>
+        <button
+          className="nav-burger"
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+        >
+          {open ? <IconClose /> : <IconMenu />}
+        </button>
+        <nav className={open ? "open" : ""} onClick={() => setOpen(false)}>
           <div className="nav-group">
             <NavLink className="nav-link" to="/" end>
               <IconHome /> portfolio

@@ -94,6 +94,9 @@ function Chrome({ email, onLogout }: { email: string; onLogout: () => void }) {
           <a href="/" className="nav" style={{ color: "var(--muted)" }}>
             View site
           </a>
+          <a className="btn" href="/resume" target="_blank" rel="noreferrer">
+            Résumé ↓
+          </a>
           <button className="btn" onClick={onLogout} title={`Signed in as ${email}`}>
             Log out
           </button>

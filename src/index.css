@@ -165,6 +165,10 @@ img {
   padding-top: 16px;
   border-top: 1px solid var(--line);
 }
+/* burger only shows on mobile (see responsive block) */
+.nav-burger {
+  display: none;
+}
 
 .content {
   flex: 1;
@@ -1514,7 +1518,7 @@ a.stat:hover .v {
     z-index: 30;
     border-right: none;
     border-bottom: 1px solid var(--line);
-    padding: 14px 20px;
+    padding: 12px 20px;
     background: var(--bg);
     display: flex;
     flex-direction: row;
@@ -1522,37 +1526,58 @@ a.stat:hover .v {
     justify-content: space-between;
     gap: 12px;
   }
-  .sidebar .brand {
-    margin-bottom: 12px;
-  }
-  .sidebar nav {
-    flex: 1;
-    min-width: 0;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .nav-burger {
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
   }
-  /* theme toggle sits on the right of the same row as the tabs */
+  .nav-burger svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+  }
   .sidebar .theme-label {
     display: none;
   }
-  /* dissolve the group boxes so all tabs flow/wrap as one row */
+  /* burger dropdown menu */
+  .sidebar nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 14px 14px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+  }
+  .sidebar nav.open {
+    display: flex;
+  }
   .sidebar .nav-group {
     display: contents;
   }
-  /* mobile: clear active-tab highlight (accent pill) */
   .sidebar a.nav-link {
-    padding: 5px 10px;
-    gap: 6px;
-    font-size: 11px;
-    border-radius: 999px;
+    width: 100%;
+    padding: 12px 10px;
+    gap: 12px;
+    font-size: 13px;
+    border-radius: 8px;
     border: 1px solid transparent;
-    white-space: nowrap;
   }
   .sidebar a.nav-link svg {
-    width: 13px;
-    height: 13px;
+    width: 16px;
+    height: 16px;
   }
   .sidebar a.nav-link.active {
     background: var(--accent);

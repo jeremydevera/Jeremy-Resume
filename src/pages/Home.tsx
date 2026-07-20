@@ -65,9 +65,6 @@ export function Home() {
             ))}
             {p?.email && <a href={`mailto:${p.email}`}>email</a>}
           </div>
-          <Link to="/resume" className="btn-resume">
-            Download résumé (PDF) ↓
-          </Link>
         </div>
       </section>
 
