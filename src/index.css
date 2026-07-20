@@ -2157,7 +2157,7 @@ a.stat:hover .v {
 .r-exp-role { font-weight: 700; }
 .r-exp-period { color: var(--r-muted); font-size: 12px; white-space: nowrap; }
 .r-exp-org { color: var(--r-muted); font-size: 12px; margin-bottom: 4px; }
-.r-exp-desc { font-size: 12.5px; }
+.r-exp-desc { font-size: 12.5px; padding-left: 14px; }
 .r-exp-desc ul, .r-exp-desc ol { margin: 4px 0; padding-left: 18px; }
 .r-exp-desc ul { list-style: disc; }
 .r-exp-desc ol { list-style: decimal; }
@@ -2306,15 +2306,20 @@ a.stat:hover .v {
 
 /* ============ Print ============ */
 @media print {
-  @page { size: A4; margin: 12mm; }
+  /* margin:0 removes the browser's auto header (date) + footer (URL);
+     page margins come from the sheet padding below instead */
+  @page { size: A4; margin: 0; }
   body { background: #fff; }
   .sidebar, .admin-bar, .rb-controls { display: none !important; }
   .rb, .rb-preview { display: block; padding: 0; margin: 0; background: #fff; overflow: visible; }
   .resume-sheet {
-    box-shadow: none; width: 100%; min-height: 0; margin: 0; padding: 0;
+    box-shadow: none; width: 100%; min-height: 0; margin: 0;
+    padding: 14mm 13mm;
   }
-  .struct-modern .r-header { margin: 0 0 18px; padding: 28px 30px; }
+  .struct-modern .r-header { margin: -14mm -13mm 18px; padding: 28px 30px; }
   .resume-sheet.struct-sidebar { padding: 0; }
+  .struct-sidebar .r-aside { padding: 14mm 9mm; }
+  .struct-sidebar .r-primary { padding: 14mm 11mm; }
 
   /* don't split an entry across pages — move the whole block to the next page */
   .r-exp,
