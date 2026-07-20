@@ -74,7 +74,6 @@ export function ResumePanel() {
       kind,
       description,
       skills: skillsInput.split(",").map((s) => s.trim()).filter(Boolean),
-      sort_order: editing ? editing.sort_order : entries.length,
       show_period_home: showToHome,
     };
     try {
@@ -149,7 +148,7 @@ export function ResumePanel() {
         <div className="field">
           <label className="checkbox" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
             <input type="checkbox" checked={showToHome} onChange={(e) => setShowToHome(e.target.checked)} />
-            <span>Show to Home <span style={{ color: "var(--muted)" }}>— show this entry’s period on the homepage</span></span>
+            <span>SHOW DATE TO HOME <span style={{ color: "var(--muted)" }}>— shows the period on the homepage (the downloaded résumé always shows dates)</span></span>
           </label>
         </div>
         <button className="btn primary" type="submit">
