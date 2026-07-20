@@ -57,8 +57,9 @@ export function ResumePanel() {
     setEntries(arr); // optimistic
     try {
       await api.post("/api/admin/resume/reorder", { ids: arr.map((e) => e.id) });
+      toast("success", "Experience order updated");
     } catch {
-      toast("error", "Reorder failed");
+      toast("error", "Reorder failed — order not saved");
       load();
     }
   };
