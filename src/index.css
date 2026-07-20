@@ -2315,6 +2315,28 @@ a.stat:hover .v {
   }
   .struct-modern .r-header { margin: 0 0 18px; padding: 28px 30px; }
   .resume-sheet.struct-sidebar { padding: 0; }
+
+  /* don't split an entry across pages — move the whole block to the next page */
+  .r-exp,
+  .r-proj,
+  .r-aside-sec {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* keep section/entry headings with the content that follows */
+  .r-h2,
+  .r-main-head,
+  .r-header,
+  .r-exp-top,
+  .r-proj-top {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  /* the sidebar column shouldn't be forced onto one page */
+  .struct-sidebar .r-aside,
+  .struct-sidebar .r-primary {
+    break-inside: auto;
+  }
 }
 
 .rb-intro {
