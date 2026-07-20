@@ -421,7 +421,7 @@ a.stat:hover .v {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 20px 0 4px;
+  margin: 24px 0 24px;
 }
 .pill {
   font-family: var(--font-mono);
@@ -1555,10 +1555,10 @@ a.stat:hover .v {
     content: none;
   }
   .sidebar .sidebar-foot {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-    margin-left: auto;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    width: 100%;
   }
   .content {
     padding: 32px 22px 90px;
