@@ -55,14 +55,20 @@ async function getResume(env: Env) {
   }));
 }
 
+async function getCertifications(env: Env) {
+  const r = await env.DB.prepare("SELECT * FROM certifications ORDER BY sort_order, id").all<Record<string, unknown>>();
+  return r.results.map((row) => ({ ...row, file_url: row.file_key ? imgUrl(row.file_key as string) : null }));
+}
+
 publicRoutes.get("/home", async (c) => {
-  const [profile, categories, projects, resume] = await Promise.all([
+  const [profile, categories, projects, resume, certifications] = await Promise.all([
     getProfile(c.env),
     getCategories(c.env),
     listPublishedProjects(c.env, null),
     getResume(c.env),
+    getCertifications(c.env),
   ]);
-  return c.json({ profile, categories, projects, resume });
+  return c.json({ profile, categories, projects, resume, certifications });
 });
 
 publicRoutes.get("/profile", async (c) => c.json(await getProfile(c.env)));

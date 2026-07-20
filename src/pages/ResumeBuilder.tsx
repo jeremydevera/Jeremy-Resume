@@ -34,6 +34,7 @@ export function ResumeBuilder() {
   const [intro, setIntro] = useState("");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [skillSel, setSkillSel] = useState<Set<string>>(new Set());
+  const [certSel, setCertSel] = useState<Set<number>>(new Set());
   const [controlsOpen, setControlsOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -50,6 +51,7 @@ export function ResumeBuilder() {
         setContactSel(ck); // all contacts shown by default
         setIntro(d.profile?.bio || ""); // editable opening intro (defaults to bio, not tagline)
         setSkillSel(new Set(d.resume.flatMap((e) => e.skills || []))); // all skills shown by default
+        setCertSel(new Set((d.certifications || []).map((c) => c.id))); // all certs by default
         setReady(true);
       })
       .catch((e) => setError(e.message));
@@ -79,11 +81,20 @@ export function ResumeBuilder() {
   const p = data.profile;
   const chosenProjects = data.projects.filter((pr) => selected.has(pr.id));
   const selectedSkills = skills.filter((s) => skillSel.has(s));
+  const certifications = data.certifications || [];
+  const selectedCerts = certifications.filter((c) => certSel.has(c.id));
 
   const toggleSkill = (s: string) =>
     setSkillSel((prev) => {
       const next = new Set(prev);
       next.has(s) ? next.delete(s) : next.add(s);
+      return next;
+    });
+
+  const toggleCert = (id: number) =>
+    setCertSel((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
 
@@ -201,6 +212,22 @@ export function ResumeBuilder() {
     </section>
   );
 
+  const certsSection = selectedCerts.length > 0 && (
+    <section className="r-section">
+      <h2 className="r-h2">Certifications</h2>
+      <ul className="r-cert-list">
+        {selectedCerts.map((c) => (
+          <li className="r-cert" key={c.id}>
+            <span className="r-cert-name">{c.name}</span>
+            {(c.issuer || c.issued) && (
+              <span className="r-cert-meta"> — {[c.issuer, c.issued].filter(Boolean).join(", ")}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+
   const header = (
     <header className="r-header">
       <h1 className="r-name">{p?.name || "Résumé"}</h1>
@@ -244,6 +271,19 @@ export function ResumeBuilder() {
               <p className="r-aside-skills">{selectedSkills.join(", ")}</p>
             </section>
           )}
+          {selectedCerts.length > 0 && (
+            <section className="r-aside-sec">
+              <h2 className="r-aside-h">Certifications</h2>
+              <div className="r-aside-certs">
+                {selectedCerts.map((c) => (
+                  <div className="r-aside-cert" key={c.id}>
+                    <span className="r-aside-cert-name">{c.name}</span>
+                    {c.issuer && <span className="r-aside-cert-meta">{c.issuer}</span>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </aside>
         <div className="r-primary">
           <header className="r-main-head">
@@ -262,6 +302,7 @@ export function ResumeBuilder() {
         {skillsFirst && skillsSection}
         {experienceSection}
         {projectsSection}
+        {certsSection}
         {!skillsFirst && skillsSection}
       </div>
     );
@@ -347,6 +388,20 @@ export function ResumeBuilder() {
                 <label className="rb-check" key={s}>
                   <input type="checkbox" checked={skillSel.has(s)} onChange={() => toggleSkill(s)} />
                   <span>{s}</span>
+                </label>
+              ))}
+            </div>
+          </>
+        )}
+
+        {certifications.length > 0 && (
+          <>
+            <label className="rb-label">Certifications to include ({selectedCerts.length}/{certifications.length})</label>
+            <div className="rb-projects">
+              {certifications.map((c) => (
+                <label className="rb-check" key={c.id}>
+                  <input type="checkbox" checked={certSel.has(c.id)} onChange={() => toggleCert(c.id)} />
+                  <span>{c.name}</span>
                 </label>
               ))}
             </div>

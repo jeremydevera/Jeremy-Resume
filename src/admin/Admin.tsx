@@ -9,6 +9,7 @@ import { ProjectsList } from "./ProjectsList";
 import { ProjectEdit } from "./ProjectEdit";
 import { CategoriesPanel } from "./CategoriesPanel";
 import { ResumePanel } from "./ResumePanel";
+import { CertificationsPanel } from "./CertificationsPanel";
 import { ProfilePanel } from "./ProfilePanel";
 
 type User = { id: number; email: string };
@@ -68,6 +69,7 @@ export function Admin() {
           <Route path="projects/:id" element={<ProjectEdit />} />
           <Route path="categories" element={<CategoriesPanel />} />
           <Route path="resume" element={<ResumePanel />} />
+          <Route path="certifications" element={<CertificationsPanel />} />
           <Route path="profile" element={<ProfilePanel />} />
         </Route>
       </Routes>
@@ -101,6 +103,7 @@ function Chrome({ email, onLogout }: { email: string; onLogout: () => void }) {
               <NavLink to="/admin/projects">Projects</NavLink>
               <NavLink to="/admin/categories">Categories</NavLink>
               <NavLink to="/admin/resume">Experience</NavLink>
+              <NavLink to="/admin/certifications">Certifications</NavLink>
               <NavLink to="/admin/profile">Profile</NavLink>
             </nav>
             <span className="spacer" />

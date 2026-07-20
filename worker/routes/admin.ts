@@ -233,6 +233,51 @@ adminRoutes.delete("/resume/:id", async (c) => {
   return c.json({ ok: true });
 });
 
+// ---- Certifications ----
+adminRoutes.get("/certifications", async (c) => {
+  const r = await c.env.DB.prepare("SELECT * FROM certifications ORDER BY sort_order, id").all<Record<string, unknown>>();
+  return c.json(r.results.map((row) => ({ ...row, file_url: row.file_key ? `/img/${row.file_key}` : null })));
+});
+
+adminRoutes.post("/certifications", async (c) => {
+  const b = await c.req.json();
+  if (!b.name) return c.json({ error: "name is required" }, 400);
+  const mx = await c.env.DB.prepare("SELECT COALESCE(MAX(sort_order), -1) + 1 AS next FROM certifications").first<{ next: number }>();
+  const res = await c.env.DB.prepare(
+    "INSERT INTO certifications (name, issuer, issued, file_key, file_type, url, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?)",
+  )
+    .bind(b.name, b.issuer ?? null, b.issued ?? null, b.file_key ?? null, b.file_type ?? null, b.url ?? null, mx?.next ?? 0)
+    .run();
+  return c.json({ id: res.meta.last_row_id }, 201);
+});
+
+adminRoutes.post("/certifications/reorder", async (c) => {
+  const b = await c.req.json();
+  const ids: number[] = Array.isArray(b.ids) ? b.ids : [];
+  if (ids.length) {
+    const stmt = c.env.DB.prepare("UPDATE certifications SET sort_order = ? WHERE id = ?");
+    await c.env.DB.batch(ids.map((id, i) => stmt.bind(i, id)));
+  }
+  return c.json({ ok: true });
+});
+
+adminRoutes.put("/certifications/:id", async (c) => {
+  const id = Number(c.req.param("id"));
+  const b = await c.req.json();
+  await c.env.DB.prepare(
+    "UPDATE certifications SET name = ?, issuer = ?, issued = ?, file_key = ?, file_type = ?, url = ? WHERE id = ?",
+  )
+    .bind(b.name, b.issuer ?? null, b.issued ?? null, b.file_key ?? null, b.file_type ?? null, b.url ?? null, id)
+    .run();
+  return c.json({ ok: true });
+});
+
+adminRoutes.delete("/certifications/:id", async (c) => {
+  const id = Number(c.req.param("id"));
+  await c.env.DB.prepare("DELETE FROM certifications WHERE id = ?").bind(id).run();
+  return c.json({ ok: true });
+});
+
 // ---- Profile ----
 adminRoutes.put("/profile", async (c) => {
   const b = await c.req.json();

@@ -77,9 +77,22 @@ export interface ResumeEntry {
   show_period_home?: boolean;
 }
 
+export interface Certification {
+  id: number;
+  name: string;
+  issuer?: string | null;
+  issued?: string | null;
+  file_key?: string | null;
+  file_type?: string | null;
+  file_url?: string | null;
+  url?: string | null;
+  sort_order?: number;
+}
+
 export interface HomeData {
   profile: Profile | null;
   categories: Category[];
   projects: ProjectListItem[];
   resume: ResumeEntry[];
+  certifications: Certification[];
 }

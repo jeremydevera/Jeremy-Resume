@@ -2501,3 +2501,13 @@ a.stat:hover .v {
   border: 1px solid var(--r-line); color: var(--r-muted); background: transparent;
 }
 .struct-sidebar .r-proj-skill { border-color: #cfd6dc; color: #55606b; }
+
+/* résumé certifications */
+.r-cert-list { list-style: none; margin: 0; padding: 0; }
+.r-cert { font-size: 12.5px; margin-bottom: 5px; color: var(--r-ink); }
+.r-cert-name { font-weight: 600; }
+.r-cert-meta { color: var(--r-muted); }
+.struct-sidebar .r-aside-certs { display: flex; flex-direction: column; gap: 10px; }
+.struct-sidebar .r-aside-cert { font-size: 12px; line-height: 1.4; }
+.struct-sidebar .r-aside-cert-name { display: block; color: var(--r-side-text); }
+.struct-sidebar .r-aside-cert-meta { display: block; color: var(--r-side-accent); font-size: 11px; }
