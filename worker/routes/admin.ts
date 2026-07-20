@@ -157,12 +157,12 @@ adminRoutes.get("/resume", async (c) => {
 
 adminRoutes.post("/resume", async (c) => {
   const b = await c.req.json();
-  if (!b.period || !b.role) return c.json({ error: "period and role are required" }, 400);
+  if (!b.role) return c.json({ error: "role is required" }, 400);
   const res = await c.env.DB.prepare(
     "INSERT INTO resume_entries (period, role, org, location, kind, description, skills, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   )
     .bind(
-      b.period,
+      b.period ?? "",
       b.role,
       b.org ?? null,
       b.location ?? null,
@@ -182,7 +182,7 @@ adminRoutes.put("/resume/:id", async (c) => {
     "UPDATE resume_entries SET period = ?, role = ?, org = ?, location = ?, kind = ?, description = ?, skills = ?, sort_order = ? WHERE id = ?",
   )
     .bind(
-      b.period,
+      b.period ?? "",
       b.role,
       b.org ?? null,
       b.location ?? null,
