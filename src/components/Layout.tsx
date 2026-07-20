@@ -1,7 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { type ReactNode } from "react";
 import { ThemeSwitch } from "./ThemeSwitch";
 
+const IconHome = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h14V9.5" />
+  </svg>
+);
 const IconGrid = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
@@ -22,11 +27,11 @@ export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <Link to="/" className="brand">
-          ./portfolio
-        </Link>
         <nav>
           <div className="nav-group">
+            <NavLink className="nav-link" to="/" end>
+              <IconHome /> portfolio
+            </NavLink>
             <NavLink className="nav-link" to="/projects">
               <IconGrid /> projects
             </NavLink>
