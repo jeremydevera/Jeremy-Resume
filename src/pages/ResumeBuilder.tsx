@@ -34,6 +34,7 @@ export function ResumeBuilder() {
   const [intro, setIntro] = useState("");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [skillSel, setSkillSel] = useState<Set<string>>(new Set());
+  const [controlsOpen, setControlsOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -208,6 +209,7 @@ export function ResumeBuilder() {
   );
 
   const summary = intro.trim() && <p className="r-summary">{intro}</p>;
+  const skillsFirst = ["classic", "compact", "modern", "digest"].includes(structure);
 
   const sheet =
     structure === "sidebar" ? (
@@ -257,9 +259,10 @@ export function ResumeBuilder() {
       <div className={`resume-sheet struct-${structure} theme-${theme}`}>
         {header}
         {summary}
+        {skillsFirst && skillsSection}
         {experienceSection}
         {projectsSection}
-        {skillsSection}
+        {!skillsFirst && skillsSection}
       </div>
     );
 
@@ -270,10 +273,18 @@ export function ResumeBuilder() {
           <Link to="/" className="rb-back">
             ← back
           </Link>
+          <button
+            className="rb-menu-toggle"
+            onClick={() => setControlsOpen((o) => !o)}
+            aria-expanded={controlsOpen}
+          >
+            ☰ Options
+          </button>
           <button className="rb-download" onClick={() => window.print()}>
             Download PDF
           </button>
         </div>
+        <div className={`rb-controls-body${controlsOpen ? " open" : ""}`}>
         <p className="rb-hint">Pick a structure, theme, and which projects to include. Then Download PDF → save as PDF.</p>
 
         <label className="rb-label">Structure</label>
@@ -385,6 +396,7 @@ export function ResumeBuilder() {
             );
           })}
           {data.projects.length === 0 && <span className="rb-empty">No projects yet.</span>}
+        </div>
         </div>
       </div>
 

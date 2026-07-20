@@ -2090,7 +2090,19 @@ a.stat:hover .v {
   border-right: 1px solid var(--line);
   padding: 24px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
 }
-.rb-controls-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.rb-controls-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+.rb-controls-body { display: block; }
+.rb-menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text);
+  cursor: pointer;
+}
 .rb-back { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
 .rb-back:hover { color: var(--text); }
 .rb-download {
@@ -2287,6 +2299,9 @@ a.stat:hover .v {
 @media (max-width: 720px) {
   .rb { flex-direction: column; }
   .rb-controls { width: 100%; flex: none; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--line); }
+  .rb-menu-toggle { display: inline-flex; align-items: center; }
+  .rb-controls-body { display: none; }
+  .rb-controls-body.open { display: block; }
 }
 
 /* ============ Print ============ */
