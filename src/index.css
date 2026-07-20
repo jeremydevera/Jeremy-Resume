@@ -1526,12 +1526,9 @@ a.stat:hover .v {
     align-items: center;
     gap: 8px;
   }
+  /* dissolve the group boxes so all tabs flow/wrap as one row */
   .sidebar .nav-group {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    border-top: none;
-    padding: 0;
+    display: contents;
   }
   /* mobile: clear active-tab highlight (accent pill) */
   .sidebar a.nav-link {
