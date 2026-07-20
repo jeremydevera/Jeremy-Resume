@@ -36,6 +36,7 @@ export function ProjectEdit() {
   const [sortOrder, setSortOrder] = useState(0);
   const [linkUrl, setLinkUrl] = useState("");
   const [coverKey, setCoverKey] = useState<string | null>(null);
+  const [featured, setFeatured] = useState(false);
   const [images, setImages] = useState<GalleryImage[]>([]);
 
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +64,7 @@ export function ProjectEdit() {
           setSortOrder(p.sort_order || 0);
           setLinkUrl(p.link_url || "");
           setCoverKey(p.cover_image_key || null);
+          setFeatured(!!p.featured);
           setImages(
             (p.images || []).map((im: any) => ({
               r2_key: im.r2_key,
@@ -125,6 +127,7 @@ export function ProjectEdit() {
       tagline,
       summary,
       body_markdown: body,
+      featured,
       sort_order: sortOrder,
       link_url: linkUrl.trim(),
       cover_image_key: coverKey,
@@ -202,6 +205,13 @@ export function ProjectEdit() {
       <div className="field">
         <label>Summary</label>
         <RichTextEditor value={summary} onChange={setSummary} placeholder="Short summary (shown on cards &amp; résumé)…" />
+      </div>
+
+      <div className="field">
+        <label className="checkbox" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
+          <span>ADD TO FEATURE <span style={{ color: "var(--muted)" }}>— show this project on the Home page (max 10)</span></span>
+        </label>
       </div>
 
       <div className="field">

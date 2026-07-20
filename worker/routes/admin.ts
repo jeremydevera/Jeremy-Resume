@@ -44,7 +44,7 @@ adminRoutes.get("/projects/:id", async (c) => {
   )
     .bind(id)
     .all();
-  return c.json({ ...p, images: imgs.results });
+  return c.json({ ...p, featured: !!p.featured, images: imgs.results });
 });
 
 adminRoutes.post("/projects", async (c) => {
@@ -53,8 +53,8 @@ adminRoutes.post("/projects", async (c) => {
   try {
     const res = await c.env.DB.prepare(
       `INSERT INTO projects
-        (slug, title, category_id, tagline, summary, body_markdown, cover_image_key, link_url, status, sort_order, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`,
+        (slug, title, category_id, tagline, summary, body_markdown, cover_image_key, link_url, status, sort_order, featured, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`,
     )
       .bind(
         b.slug,
@@ -67,6 +67,7 @@ adminRoutes.post("/projects", async (c) => {
         b.link_url ?? "",
         b.status ?? "draft",
         b.sort_order ?? 0,
+        b.featured ? 1 : 0,
       )
       .run();
     const id = res.meta.last_row_id as number;
@@ -86,7 +87,7 @@ adminRoutes.put("/projects/:id", async (c) => {
     await c.env.DB.prepare(
       `UPDATE projects SET
         slug = ?, title = ?, category_id = ?, tagline = ?, summary = ?,
-        body_markdown = ?, cover_image_key = ?, link_url = ?, status = ?, sort_order = ?, updated_at = datetime('now')
+        body_markdown = ?, cover_image_key = ?, link_url = ?, status = ?, sort_order = ?, featured = ?, updated_at = datetime('now')
        WHERE id = ?`,
     )
       .bind(
@@ -100,6 +101,7 @@ adminRoutes.put("/projects/:id", async (c) => {
         b.link_url ?? "",
         b.status ?? "draft",
         b.sort_order ?? 0,
+        b.featured ? 1 : 0,
         id,
       )
       .run();

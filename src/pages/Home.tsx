@@ -20,8 +20,11 @@ export function Home() {
 
   const filtered = useMemo(() => {
     if (!data) return [];
-    if (active === "all") return data.projects;
-    return data.projects.filter((p) => p.category_slug === active);
+    // Home shows featured projects; if none are featured, fall back to all.
+    const featured = data.projects.filter((p) => p.featured);
+    const base = featured.length ? featured : data.projects;
+    const byCat = active === "all" ? base : base.filter((p) => p.category_slug === active);
+    return byCat.slice(0, 10); // max 10 tiles on home
   }, [data, active]);
 
   if (error) return <Layout><div className="state">couldn’t load — {error}</div></Layout>;

@@ -55,6 +55,7 @@ export interface ProjectListItem {
   category_name?: string | null;
   status?: string;
   sort_order?: number;
+  featured?: boolean;
 }
 
 export interface ProjectDetail extends ProjectListItem {
