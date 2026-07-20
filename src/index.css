@@ -1125,19 +1125,47 @@ a.stat:hover .v {
     flex-basis: 100%;
     width: 100%;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 6px 0 4px;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px 0 10px;
   }
   .admin-menu.open {
     display: flex;
   }
-  .admin-menu .nav {
-    flex-direction: column;
-    gap: 14px;
-  }
   .admin-menu .spacer {
     display: none;
+  }
+  /* nav links as a clean bordered list */
+  .admin-menu .nav {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .admin-menu .nav a {
+    padding: 13px 2px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line);
+  }
+  /* View site row */
+  .admin-menu > a[href="/"] {
+    order: 2;
+    padding: 13px 2px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  /* theme toggle row */
+  .admin-menu .theme-switch {
+    order: 3;
+    padding: 16px 2px 6px;
+  }
+  /* full-width action buttons at the bottom */
+  .admin-menu .btn {
+    order: 4;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-top: 8px;
   }
   /* keep wide tables from pushing the page sideways */
   .admin-table {
