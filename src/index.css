@@ -2239,8 +2239,12 @@ a.stat:hover .v {
   margin-bottom: 3px;
 }
 .struct-sidebar .r-aside-item a { color: var(--r-side-text); text-decoration: none; word-break: break-word; }
-.struct-sidebar .r-aside-skills { display: flex; flex-direction: column; gap: 9px; }
-.struct-sidebar .r-aside-skill { font-size: 12px; line-height: 1.4; color: var(--r-side-text); }
+.struct-sidebar .r-aside-skills {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--r-side-text);
+}
 
 .struct-sidebar .r-primary { padding: 36px 36px; }
 .struct-sidebar .r-main-head {

@@ -224,13 +224,7 @@ export function ResumeBuilder() {
           {selectedSkills.length > 0 && (
             <section className="r-aside-sec">
               <h2 className="r-aside-h">Skills</h2>
-              <div className="r-aside-skills">
-                {selectedSkills.map((s) => (
-                  <span className="r-aside-skill" key={s}>
-                    {s}
-                  </span>
-                ))}
-              </div>
+              <p className="r-aside-skills">{selectedSkills.join(", ")}</p>
             </section>
           )}
         </aside>
