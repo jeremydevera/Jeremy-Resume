@@ -67,7 +67,7 @@ export function ProjectsPage() {
       )}
 
       {layout !== "cards" ? (
-        <ProjectsDisplay projects={pageItems} layout={layout} />
+        <ProjectsDisplay projects={pageItems} layout={layout} showCategory={active === "all"} />
       ) : (
         <div className="pcards">
           {pageItems.map((p) => (
@@ -80,7 +80,9 @@ export function ProjectsPage() {
               )}
               <div className="pcard-body">
                 <div className="pcard-tags">
-                  {p.category_name && <span className="cat-pill">{p.category_name}</span>}
+                  {active === "all" && p.category_name && (
+                    <span className="cat-pill">{p.category_name}</span>
+                  )}
                 </div>
                 <h3 className="pcard-title">{p.title}</h3>
                 {(p.summary || p.tagline) && (

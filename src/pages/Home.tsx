@@ -122,7 +122,7 @@ export function Home() {
         {filtered.length === 0 ? (
           <div className="state">no projects yet</div>
         ) : (
-          <ProjectsDisplay projects={filtered} layout={layout} hideCover />
+          <ProjectsDisplay projects={filtered} layout={layout} hideCover showCategory={active === "all"} />
         )}
       </section>
 
