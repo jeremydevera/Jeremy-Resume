@@ -1491,6 +1491,34 @@ a.stat:hover .v {
   height: min(420px, 55vh);
   background: #111;
 }
+/* center crosshair so the subject can be aligned to the middle of the crop */
+.crop-center {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.crop-center::before,
+.crop-center::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+}
+.crop-center::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+.crop-center::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
 .crop-controls {
   padding: 14px 16px 16px;
   display: flex;

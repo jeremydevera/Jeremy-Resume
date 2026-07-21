@@ -109,9 +109,24 @@ export function ProjectEdit() {
     }
   };
 
-  const startCrop = (target: "cover" | "gallery" | "replace", files: FileList) => {
+  const startCrop = (target: "cover" | "gallery" | "replace", files: FileList | File[]) => {
     setCropTarget(target);
     setCropQueue(Array.from(files));
+  };
+
+  // load an already-uploaded image back into the cropper to re-crop it
+  const editImage = async (target: "cover" | "replace", key: string, idx?: number) => {
+    try {
+      const res = await fetch(`/img/${key}`);
+      if (!res.ok) throw new Error("load failed");
+      const blob = await res.blob();
+      const ext = blob.type === "image/png" ? "png" : "jpg";
+      const file = new File([blob], `edit.${ext}`, { type: blob.type || "image/jpeg" });
+      if (target === "replace" && idx !== undefined) setReplaceIdx(idx);
+      startCrop(target, [file]);
+    } catch {
+      toast("error", "Could not load image to edit");
+    }
   };
 
   const save = async () => {
@@ -246,8 +261,13 @@ export function ProjectEdit() {
             <span style={{ color: "var(--muted)", fontSize: 14 }}>No cover</span>
           )}
           <button className="btn" onClick={() => coverInput.current?.click()} type="button">
-            Upload cover
+            {coverKey ? "Upload new" : "Upload cover"}
           </button>
+          {coverKey && (
+            <button className="btn" type="button" onClick={() => editImage("cover", coverKey)}>
+              Edit / crop
+            </button>
+          )}
           {coverKey && (
             <button
               className="btn danger"
@@ -311,6 +331,13 @@ export function ProjectEdit() {
                 setImages((prev) => prev.map((x, j) => (j === i ? { ...x, alt: e.target.value } : x)))
               }
             />
+            <button
+              className="btn"
+              type="button"
+              onClick={() => editImage("replace", im.r2_key, i)}
+            >
+              Edit / crop
+            </button>
             <button
               className="btn"
               type="button"

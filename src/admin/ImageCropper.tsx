@@ -76,10 +76,12 @@ export function ImageCropper({
             crop={crop}
             zoom={zoom}
             aspect={aspect}
+            showGrid
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
           />
+          <div className="crop-center" aria-hidden="true" />
         </div>
         <div className="crop-controls">
           <div className="crop-aspects">
