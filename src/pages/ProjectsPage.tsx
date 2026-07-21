@@ -4,7 +4,8 @@ import { api } from "../api";
 import type { HomeData } from "../types";
 import { Layout } from "../components/Layout";
 import { ProjectsDisplay } from "../components/ProjectLayouts";
-import { hostOf, initials, stripHtml } from "../components/util";
+import { ProjectThumb } from "../components/ProjectThumb";
+import { hostOf, stripHtml } from "../components/util";
 
 export function ProjectsPage() {
   const [data, setData] = useState<HomeData | null>(null);
@@ -73,11 +74,7 @@ export function ProjectsPage() {
           {pageItems.map((p) => (
             <div key={p.id} className="pcard">
               <Link to={`/projects/${p.slug}`} className="pcard-overlay" aria-label={p.title} />
-              {p.cover_url ? (
-                <img className="pcard-icon" src={p.cover_url} alt={p.title} loading="lazy" />
-              ) : (
-                <div className="pcard-icon ph">{initials(p.title)}</div>
-              )}
+              <ProjectThumb project={p} imgClass="pcard-icon" />
               <div className="pcard-body">
                 <div className="pcard-tags">
                   {active === "all" && p.category_name && (

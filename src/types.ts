@@ -57,6 +57,7 @@ export interface ProjectListItem {
   sort_order?: number;
   featured?: boolean;
   skills?: string[];
+  images?: string[]; // gallery image URLs (for hover/in-view thumbnail carousel)
 }
 
 export interface ProjectDetail extends ProjectListItem {

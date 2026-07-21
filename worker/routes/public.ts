@@ -38,11 +38,34 @@ async function listPublishedProjects(env: Env, categorySlug: string | null) {
   }
   sql += " ORDER BY p.sort_order, p.created_at DESC";
   const r = await env.DB.prepare(sql).bind(...params).all<Record<string, unknown>>();
+
+  // fetch gallery images for all listed projects in one query, grouped by project
+  const ids = r.results.map((row) => row.id as number);
+  const galleryByProject = new Map<number, string[]>();
+  if (ids.length) {
+    const placeholders = ids.map(() => "?").join(",");
+    const imgs = await env.DB.prepare(
+      `SELECT project_id, r2_key FROM project_images
+       WHERE project_id IN (${placeholders}) ORDER BY sort_order, id`,
+    )
+      .bind(...ids)
+      .all<Record<string, unknown>>();
+    for (const im of imgs.results) {
+      const pid = im.project_id as number;
+      const url = imgUrl(im.r2_key as string | null);
+      if (!url) continue;
+      const arr = galleryByProject.get(pid) ?? [];
+      arr.push(url);
+      galleryByProject.set(pid, arr);
+    }
+  }
+
   return r.results.map((row) => ({
     ...row,
     cover_url: imgUrl(row.cover_image_key as string | null),
     featured: !!row.featured,
     skills: JSON.parse((row.skills as string) || "[]"),
+    images: galleryByProject.get(row.id as number) ?? [],
   }));
 }
 
