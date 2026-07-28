@@ -38,11 +38,13 @@ async function cropToFile(file: File, area: Area): Promise<File> {
 export function ImageCropper({
   file,
   defaultAspect = 16 / 10,
+  lockAspect = false,
   onDone,
   onCancel,
 }: {
   file: File;
   defaultAspect?: number;
+  lockAspect?: boolean; // hide aspect pills + force defaultAspect (e.g. avatar must match its box)
   onDone: (file: File) => void; // cropped OR original (skip)
   onCancel: () => void;
 }) {
@@ -84,18 +86,20 @@ export function ImageCropper({
           <div className="crop-center" aria-hidden="true" />
         </div>
         <div className="crop-controls">
-          <div className="crop-aspects">
-            {ASPECTS.map((a) => (
-              <button
-                key={a.label}
-                type="button"
-                className={`pill ${Math.abs(aspect - a.value) < 0.001 ? "active" : ""}`}
-                onClick={() => setAspect(a.value)}
-              >
-                {a.label}
-              </button>
-            ))}
-          </div>
+          {!lockAspect && (
+            <div className="crop-aspects">
+              {ASPECTS.map((a) => (
+                <button
+                  key={a.label}
+                  type="button"
+                  className={`pill ${Math.abs(aspect - a.value) < 0.001 ? "active" : ""}`}
+                  onClick={() => setAspect(a.value)}
+                >
+                  {a.label}
+                </button>
+              ))}
+            </div>
+          )}
           <input
             className="crop-zoom"
             type="range"

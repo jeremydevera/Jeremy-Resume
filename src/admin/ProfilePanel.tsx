@@ -214,7 +214,8 @@ export function ProfilePanel() {
           {cropFile && (
             <ImageCropper
               file={cropFile}
-              defaultAspect={1}
+              defaultAspect={200 / 240} /* matches the .avatar-wrap box (5:6) so the crop fills it exactly */
+              lockAspect
               onDone={uploadAvatar}
               onCancel={() => setCropFile(null)}
             />
