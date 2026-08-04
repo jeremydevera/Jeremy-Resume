@@ -6,6 +6,7 @@ import { ProjectDetailPage } from "./pages/ProjectDetail";
 import { HireMe } from "./pages/HireMe";
 import { NotFound } from "./pages/NotFound";
 import { ResumeBuilder } from "./pages/ResumeBuilder";
+import { CoverLetters } from "./pages/CoverLetters";
 import { Admin } from "./admin/Admin";
 
 export function App() {
@@ -18,6 +19,7 @@ export function App() {
         <Route path="/experience" element={<ExperiencePage />} />
         <Route path="/hire-me" element={<HireMe />} />
         <Route path="/resume" element={<ResumeBuilder />} />
+        <Route path="/cover" element={<CoverLetters />} />
         <Route path="/admin/*" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

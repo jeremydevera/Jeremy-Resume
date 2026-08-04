@@ -722,6 +722,61 @@ a.stat:hover .v {
   max-width: 560px;
   margin: 0 0 34px;
 }
+.page-intro code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* /cover — cover-letter picker with per-card copy */
+.cover-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.cover-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.cover-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.cover-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+}
+.cover-tag {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.copy-btn {
+  flex: none;
+  min-width: 92px;
+}
+.copy-btn.ok {
+  border-color: #16a34a;
+  color: #16a34a;
+}
+.cover-body {
+  margin: 0;
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+  overflow-x: auto;
+}
 
 /* big project cards */
 .pcards {
