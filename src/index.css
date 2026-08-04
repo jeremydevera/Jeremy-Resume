@@ -1791,7 +1791,9 @@ a.stat:hover .v {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .avatar,
+  /* shrink the FRAME on mobile (the img is 100% of the wrap); resizing .avatar
+     alone left the image smaller than its 200×240 wrap → black gap */
+  .avatar-wrap,
   .avatar-ph {
     width: 150px;
     height: 180px;
