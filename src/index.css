@@ -2262,6 +2262,18 @@ a.stat:hover .v {
 .r-proj-cat { color: var(--r-muted); font-size: 11px; white-space: nowrap; }
 .r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; padding-left: 14px; }
 .r-proj-link { font-size: 11px; color: var(--r-accent); }
+/* projects grouped by category on the résumé */
+.r-proj-group + .r-proj-group { margin-top: 10px; }
+.r-proj-cat-head {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--r-accent);
+  margin: 0 0 6px;
+  padding-left: 14px;
+}
+.struct-sidebar .r-proj-cat-head { color: var(--r-main-accent); }
 .r-skills { display: flex; flex-wrap: wrap; gap: 6px; }
 .r-skill { border: 1px solid var(--r-line); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--r-ink); }
 
@@ -2428,6 +2440,7 @@ a.stat:hover .v {
   .r-main-head,
   .r-header,
   .r-exp-top,
+  .r-proj-cat-head,
   .r-proj-top {
     break-after: avoid;
     page-break-after: avoid;

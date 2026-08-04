@@ -80,6 +80,10 @@ export function ResumeBuilder() {
 
   const p = data.profile;
   const chosenProjects = data.projects.filter((pr) => selected.has(pr.id));
+  // same category order as the picker, but only the projects actually chosen
+  const chosenGroups = groups
+    .map((g) => ({ ...g, projects: g.projects.filter((pr) => selected.has(pr.id)) }))
+    .filter((g) => g.projects.length > 0);
   const selectedSkills = skills.filter((s) => skillSel.has(s));
   const certifications = data.certifications || [];
   const selectedCerts = certifications.filter((c) => certSel.has(c.id));
@@ -166,36 +170,39 @@ export function ResumeBuilder() {
   const projectsSection = chosenProjects.length > 0 && (
     <section className="r-section">
       <h2 className="r-h2">Projects</h2>
-      <div className="r-proj-list">
-        {chosenProjects.map((pr) => (
-          <div className="r-proj" key={pr.id}>
-            <div className="r-proj-top">
-              <span className="r-proj-title">{pr.title}</span>
-              {pr.link_url ? (
-                <a className="r-proj-link" href={pr.link_url}>
-                  {hostOf(pr.link_url)} ↗
-                </a>
-              ) : pr.category_name ? (
-                <span className="r-proj-cat">{pr.category_name}</span>
-              ) : null}
-            </div>
-            {pr.summary ? (
-              <div className="r-proj-desc" dangerouslySetInnerHTML={{ __html: pr.summary }} />
-            ) : pr.tagline ? (
-              <p className="r-proj-desc">{pr.tagline}</p>
-            ) : null}
-            {pr.skills && pr.skills.length > 0 && (
-              <div className="r-proj-skills">
-                {pr.skills.map((s) => (
-                  <span className="r-proj-skill" key={s}>
-                    {s}
-                  </span>
-                ))}
+      {chosenGroups.map((g) => (
+        <div className="r-proj-group" key={g.key}>
+          <h3 className="r-proj-cat-head">{g.name}</h3>
+          <div className="r-proj-list">
+            {g.projects.map((pr) => (
+              <div className="r-proj" key={pr.id}>
+                <div className="r-proj-top">
+                  <span className="r-proj-title">{pr.title}</span>
+                  {pr.link_url ? (
+                    <a className="r-proj-link" href={pr.link_url}>
+                      {hostOf(pr.link_url)} ↗
+                    </a>
+                  ) : null}
+                </div>
+                {pr.summary ? (
+                  <div className="r-proj-desc" dangerouslySetInnerHTML={{ __html: pr.summary }} />
+                ) : pr.tagline ? (
+                  <p className="r-proj-desc">{pr.tagline}</p>
+                ) : null}
+                {pr.skills && pr.skills.length > 0 && (
+                  <div className="r-proj-skills">
+                    {pr.skills.map((s) => (
+                      <span className="r-proj-skill" key={s}>
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </section>
   );
 
