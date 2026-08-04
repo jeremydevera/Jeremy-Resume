@@ -2257,7 +2257,7 @@ a.stat:hover .v {
 .r-exp-desc ul { list-style: disc; }
 .r-exp-desc ol { list-style: decimal; }
 .r-proj { margin-bottom: 10px; }
-.r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-left: 14px; }
 .r-proj-title { font-weight: 600; }
 .r-proj-cat { color: var(--r-muted); font-size: 11px; white-space: nowrap; }
 .r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; padding-left: 14px; }
