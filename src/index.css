@@ -2257,23 +2257,24 @@ a.stat:hover .v {
 .r-exp-desc ul { list-style: disc; }
 .r-exp-desc ol { list-style: decimal; }
 .r-proj { margin-bottom: 10px; }
-.r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-left: 14px; }
+.r-proj-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-left: 18px; }
 .r-proj-title { font-weight: 600; }
 .r-proj-cat { color: var(--r-muted); font-size: 11px; white-space: nowrap; }
-.r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; padding-left: 14px; }
+.r-proj-desc { color: var(--r-muted); font-size: 12.5px; margin: 2px 0; padding-left: 18px; }
 .r-proj-link { font-size: 11px; color: var(--r-accent); }
 /* projects grouped by category on the résumé */
 .r-proj-group + .r-proj-group { margin-top: 10px; }
 .r-proj-cat-head {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--r-accent);
-  margin: 0 0 6px;
-  padding-left: 14px;
+  margin: 0 0 5px;
+  padding: 0 0 3px;
+  border-bottom: 1px solid var(--r-accent);
 }
-.struct-sidebar .r-proj-cat-head { color: var(--r-main-accent); }
+.struct-sidebar .r-proj-cat-head { color: var(--r-main-accent); border-bottom-color: var(--r-main-accent); }
 .r-skills { display: flex; flex-wrap: wrap; gap: 6px; }
 .r-skill { border: 1px solid var(--r-line); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--r-ink); }
 
@@ -2602,7 +2603,7 @@ a.stat:hover .v {
 .emailpop-actions .btn { flex: 1; text-align: center; }
 
 /* project skill tags on the résumé */
-.r-proj-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; padding-left: 14px; }
+.r-proj-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; padding-left: 18px; }
 .r-proj-skill {
   font-size: 10.5px; line-height: 1;
   padding: 4px 8px; border-radius: 4px;
